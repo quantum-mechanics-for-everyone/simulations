@@ -1,0 +1,134 @@
+* {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+html { width: 100%; }
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	/* Uncomment for letterbox HD mode */
+	/*
+	background-color: #000000;
+	padding: 15px 49px;
+	*/
+}
+
+html, body { height: 100%; overflow: hidden; }
+
+#experiment {
+	border: 1px solid #555;
+}
+
+.messagebox {
+	cursor: default;
+	position: absolute;
+	abackground-color: #FFFFFF;
+	font-family: 'Calibri', 'Helvetica', sans-serif;
+	padding: 0 5px;
+	font-size: 15pt;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.messagebox img {
+	vertical-align: middle;
+}
+
+.arrowmanager { }
+
+.helparrow {
+	position: absolute;
+	overflow: hidden;
+	/* outline: 1px solid red; */
+}
+
+.labelmanager {
+	position: absolute;
+	left: 0; top: 0;
+}
+
+.labelmanager .background {
+	position: absolute;
+	left: 0; top: 0;
+	background-color: #000000;
+	opacity: 0.65;
+}
+
+.labelmanager .container {
+	position: absolute;
+	left: 0; top: 0;
+}
+
+.labelmanager .container .label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	cursor: default;
+	afont-variant: small-caps;
+	text-transform: uppercase;
+	position: absolute;
+	display: inline-block;
+	padding: 5px 10px;
+	color: #FFF;
+	font-family: 'Calibri', 'Helvetica', sans-serif;
+	border-radius: 10px;
+	width: auto;
+	text-align: center;
+	background-color: rgba(0,0,0,0.8);
+	box-shadow: #000000 0px 0px 15px;
+}
+
+.labelmanager .container .label p { margin: 0; padding: 0; }
+
+.labelmanager .container .label img {
+	vertical-align: middle;
+}
+
+.labelmanager .container .imagelabel {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	cursor: default;
+	position: absolute;
+	display: inline-block;
+}
+
+#loaderlayer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(255,255,255,0.5);
+}
+#loader {
+	position: absolute;
+	width: 300px;
+	height: 100px;
+	border-radius: 15px;
+	background-color: rgba(255,255,255,0.8);
+	box-shadow: #000000 0px 0px 20px;
+	text-align: center;
+}
+#loader p {
+	font-size: 15pt;
+	font-weight: bold;
+	font-family: sans-serif;
+	color: #444;
+}
+#loader p img {
+	margin-top: 15px;
+	border: 1px solid #E0E0E0;
+}

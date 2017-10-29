@@ -1,0 +1,77 @@
+/* Open Sans  */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic);
+
+* {
+	/* Prevent text highlight */
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	font-family: 'Open Sans', sans-serif;
+}
+
+a:link, a:visited { color: #00C; text-decoration: none; }
+a:hover, a:active { color: #48F; text-decoration: underline; }
+
+canvas {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+html { width: 100%; }
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	font-size: 16px;
+}
+
+html, body { height: 100%; overflow-x: hidden; }
+
+.SGE_Application {
+	background-color: #CCC;
+}
+
+.SGE_Component {
+	outline: 1px solid #888;
+}
+
+.SGE_Viewport3D {
+}
+
+.SGE_MessageBox {
+	background-color: #FFF;
+	font-size: 120%;
+}
+
+.SGE_MessageBox .contents {
+	padding: 5px 10px 30px 10px; /* extra padding on the bottom looks better */
+}
+.SGE_MessageBox .contents em {
+	padding: 0 0.125em;
+}
+
+.SGE_MessageBox p {
+	margin: 0 0 1.25em 0;
+}
+
+.SGE_MessageBox img {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.SGE_Button button {
+	padding: 0;
+	margin: 0;
+}
+
+.SGE_Canvas2D {
+}

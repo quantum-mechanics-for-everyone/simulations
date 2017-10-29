@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:addthis="http://www.addthis.com/help/api-spec" xml:lang="en" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title></title>
+<style type="text/css">
+body {
+	margin: 0; padding: 0;
+}
+</style>
+</head>
+<body>
+
+<div style="width:800px;padding:10px;height:480px;background-color: #DDDDDD;">
+<div style="padding: 5px;text-align: center">
+<input type="button" id="shoot" value="Shoot" style="width:100px;height:30px;"/> 
+<input type="text" id="numelectrons" value="200" style="text-align:center;width:50px;height:30px;"/> photons
+| <input type="button" id="clear" value="Clear screen" style="width:100px;height:30px;"/> 
+<select id="distribution" style="display:inline-block">
+<option value="gauss" selected="selected">exp(-x^2)</option>
+<option value="sinc">sinc(5x)^2</option>
+<option value="cos">cos(5x)^2</option>
+<option value="gausscos"exp(-x^2)*cos(5x)^2</option>
+</select>
+</div>
+<div><canvas width="800" height="400" id="screen" style="border:1px solid #CCC;"></canvas></div>
+<div><canvas width="800" height="100" id="graph" style="display: none; border:1px solid #CCC;"></canvas></div>
+<div id="msg" style="display:none"></div>
+</div>
+
+<script style="text/javascript">
+	
+	// #################################################################################################
+	// Electron detection simulation
+	// Georgetown University
+	// Department of Physics - Washington, DC, USA
+	// Written by Lucas Vieira (https://github.com/1ucasvb)
+	//
+	// This particular simulation (this file) is licensed CC BY-SA
+	// https://creativecommons.org/licenses/by-sa/2.0/
+	// 
+	// #################################################################################################
+	
+	var width = 5;
+	
+	// Eh, no need to normalize it, to be honest, we just need the shape!
+	function distribution(x) {
+		switch(document.getElementById("distribution").value) {
+			case "gauss":
+				return Math.exp(-x*x/2);
+			case "sinc":
+				return Math.pow(Math.sin(5*x)/(5*x),2);
+			case "cos":
+				return Math.pow(Math.cos(5*x),2);
+			case "gausscos":
+				return Math.pow(Math.cos(5*x),2)*Math.exp(-x*x);
+			case "gausscos":
+				return Math.pow(Math.cos(5*x),2)*Math.exp(-x*x);
+		}
+		return Math.pow(Math.sin(x)/(x),2)
+	}
+
+	var x, y, px, py, ctx;
+	// Draw graph
+	var graph = document.getElementById('graph');
+	function drawGraph() {
+		ctx = graph.getContext("2d");
+		ctx.fillStyle = "#FFFFFF";
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+		
+		ctx.beginPath();
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = '#ff0000';
+		
+		for(px = 0; px < graph.width; px++) {
+			x = (((px / graph.width)-0.5)*2);
+			y = distribution(x*width);
+			if (px == 0) {
+				ctx.lineTo(px, (1-y)*graph.height);
+			} else {
+				ctx.lineTo(px, (1-y)*graph.height);
+			}
+		}
+		ctx.stroke();
+	}
+	
+	// Screen
+	document.getElementById('shoot').addEventListener("click",function(){
+		drawGraph();
+		shootElectrons();
+	});
+	var canvas = document.getElementById('screen');
+
+	document.getElementById('clear').addEventListener("click",clearScreen);
+
+	function clearScreen() {
+		ctx = canvas.getContext("2d");
+		ctx.fillStyle = "#444444";
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+	}
+	clearScreen();
+	
+	function shootElectrons(e) {
+		
+		ctx = canvas.getContext("2d");
+		//ctx.fillStyle = "#FFFFFF";
+		ctx.fillStyle = "rgba(255,255,255,0.25)";
+
+		var start = Date.now();
+		var total = 0;
+		var numelectrons = parseInt(document.getElementById("numelectrons").value);
+		if (isNaN(numelectrons)) {
+			numelectrons = 1000;
+			document.getElementById("numelectrons").value = 1000;
+		}
+		while(total < numelectrons) {
+			x = (Math.random()-0.5)*2;
+			if (Math.random() <= distribution(x*width)) {
+				ctx.fillRect(canvas.width/2 * (1 + x),Math.random()*canvas.height,1.5,1.5);
+				total++;
+			}
+		}
+		document.getElementById("msg").innerHTML = "Fired "+numelectrons+" electrons in "+(Date.now()-start)+" ms";
+	}
+	
+	
+</script>
+
+</body>
+</html>

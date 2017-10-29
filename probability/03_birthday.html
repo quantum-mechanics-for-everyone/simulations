@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Quantum Mechanics - Birthday Problem</title>
+<link rel="stylesheet" type="text/css" media="all" href="03_birthday.css"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body>
+
+<div id="app">
+	<h1>Birthday Problem</h1>
+	
+	<div class="upperpanel">
+		<canvas class="graph" id="graph" width="765" height="300"></canvas>
+		<canvas class="graph" id="points" width="765" height="300"></canvas>
+		<canvas class="graph" id="overlay" width="765" height="300"></canvas>
+		<button id="bt_show">SHOW GRAPH</button>
+		<button id="bt_compute">CALCULATE<br/>PROBABILITY</button>
+		<div id="probability"></div>
+	</div>
+
+	<div class="lowerpanel">
+		<input class="slider" id="numpeople_slider" name="numpeople_slider" type="range" min="1" max="366" step="1" value="1"/>
+		<input id="numpeople_value" type="number" min="1" max="1" value="1" step="1"/>
+		<label for="numpeople_slider" id="numpeople_label">person</label>
+	</div>
+	
+</div>
+
+
+<script style="text/javascript" src="lib/03_birthday.js"></script>
+
+</body>
+</html>

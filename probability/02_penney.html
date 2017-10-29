@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Quantum Mechanics - Penney's Game</title>
+<link rel="stylesheet" type="text/css" media="all" href="02_penney.css"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body>
+
+<div id="app">
+	<h1>Penney's Game</h1>
+	
+	<div class="selections">
+		<div class="selection selection_player">
+			<span id="name_player" class="player">YOU</span>
+			<canvas id="coin_player_1" class="coin coin1" width="80" height="80"></canvas>
+			<canvas id="coin_player_2" class="coin coin2" width="80" height="80"></canvas>
+			<canvas id="coin_player_3" class="coin coin3" width="80" height="80"></canvas>
+			<div class="score" id="score_player">00</div>
+		</div>
+		
+		<span class="vs">vs</span>
+		
+		<div class="selection selection_pc">
+			<span id="name_pc" class="player">COMPUTER</span>
+			<canvas id="coin_pc_1" class="coin coin1" width="80" height="80"></canvas>
+			<canvas id="coin_pc_2" class="coin coin2" width="80" height="80"></canvas>
+			<canvas id="coin_pc_3" class="coin coin3" width="80" height="80"></canvas>
+			<div class="score" id="score_pc">00</div>
+		</div>
+	</div>
+	
+	<div class="lowerpanel">
+		<canvas id="game" width="520" height="210"></canvas>
+		<div class="sidepanel">
+			<div class="stats">
+				<p>Matches: <span id="matches_count">0 / 100</span></p>
+				<p>You won <span id="player_won">0</span>%</p>
+				<p>Computer won <span id="pc_won">0</span>%</p>
+				<div id="winner"></div>
+			</div>
+			<button id="play">PLAY</button>
+		</div>
+	</div>
+</div>
+
+<script style="text/javascript" src="02_penney.js"></script>
+<script style="text/javascript" src="lib/TweenMax.min.js"></script>
+
+</body>
+</html>
