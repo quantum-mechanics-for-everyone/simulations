@@ -1,4 +1,4 @@
-// QUANTUM Engine Tutorials
+// PHOTON Engine Tutorials
 // Copyright (C) 2015-2016 Georgetown University
 // Department of Physics - Washington, DC, USA
 // Written by Dylan Cutler (https://github.com/DCtheTall)
@@ -28,20 +28,20 @@ Arrow Multiplication Exercise:
 ---------------------------------
 How to multiply amplitudes
 
-This program uses the QUANTUM engine to
+This program uses the PHOTON engine to
 render an exercise which demonstrates
 the Hong-Ou-Mandel effect as an example
-of quantum entanglement.
+of PHOTON entanglement.
 
 Author: Dylan Cutler
 
 */
 
-// Setting the QUANTUM.experiment property to a function that starts
+// Setting the PHOTON.experiment property to a function that starts
 // the exercise.
-QUANTUM.experiment = function() {
-  // Reference to the instance of the QUANTUM app
-  var app = QUANTUM.instance;
+PHOTON.experiment = function() {
+  // Reference to the instance of the PHOTON app
+  var app = PHOTON.instance;
   // If WebGL is supported, the experiment begins
   beginExperiment();
 }
@@ -53,45 +53,45 @@ function beginExperiment() {
 //== EXPERIMENT SETUP ==//
 
 // Reference to the instance of the application
-var app = QUANTUM.instance;
+var app = PHOTON.instance;
 
 //-- Adding message box and buttons --//
 
 // Refresh button
-var btRefresh = new QUANTUM.ButtonRefresh();
+var btRefresh = new PHOTON.ButtonRefresh();
 app.add(btRefresh, true);
 
 // New window button
-var btWindow = new QUANTUM.ButtonWindow();
+var btWindow = new PHOTON.ButtonWindow();
 app.add(btWindow, true);
 
 // Play button
-var btPlay = new QUANTUM.ButtonPlay(590, 360, 70, 50);
+var btPlay = new PHOTON.ButtonPlay(590, 360, 70, 50);
 btPlay.disable();
 app.add(btPlay, true);
 
 // BACK button
-var btBack = new QUANTUM.ButtonBack(680, 360, 140, 50);
+var btBack = new PHOTON.ButtonBack(680, 360, 140, 50);
 btBack.disable();
 app.add(btBack, true);
 
 // NEXT button
-var btNext = new QUANTUM.ButtonNext(840, 360, 140, 50);
+var btNext = new PHOTON.ButtonNext(840, 360, 140, 50);
 btNext.disable();
 app.add(btNext, true);
 
 // Help button
-var btHelp = new QUANTUM.ButtonHelp(1000, 360, 70, 50);
+var btHelp = new PHOTON.ButtonHelp(1000, 360, 70, 50);
 app.add(btHelp, true);
 
 // Message box
-var msg = new QUANTUM.MessageBox(600, 70, 460, 250);
+var msg = new PHOTON.MessageBox(600, 70, 460, 250);
 app.add(msg, true);
 
 //-- Help Layer setup --//
 
-QUANTUM.helpLayerSetup = function() {
-  var helpLayer = QUANTUM.children['help-layer'];
+PHOTON.helpLayerSetup = function() {
+  var helpLayer = PHOTON.children['help-layer'];
 
   with(helpLayer) {
     // Rendering a clone of the help button
@@ -117,87 +117,87 @@ QUANTUM.helpLayerSetup = function() {
 //-- Elements for the experiment --//
 
 // Experiment window
-var exp = new QUANTUM.ExperimentBox(50, 70, 520, 360);
+var exp = new PHOTON.ExperimentBox(50, 70, 520, 360);
 app.add(exp, true);
 
 // Light paths
 var lightPaths = [
   // Index 0: From Source A to splitter
-  new QUANTUM.LightPath(130, 70, 250, 160),
+  new PHOTON.LightPath(130, 70, 250, 160),
   // Index 1: From end of path 0 to bottom of beam splitter
-  new QUANTUM.LightPath(250, 160, 260, 180, true),
+  new PHOTON.LightPath(250, 160, 260, 180, true),
   // Index 2: From Source B to splitter
-  new QUANTUM.LightPath(120, 285, 260, 180),
+  new PHOTON.LightPath(120, 285, 260, 180),
   // Index 3: From middle of beam splitter to mirror interface
-  new QUANTUM.LightPath(260, 180, 270, 160, true),
+  new PHOTON.LightPath(260, 180, 270, 160, true),
   // Index 4: From beam splitter to detector C
-  new QUANTUM.LightPath(270, 160, 390, 70),
+  new PHOTON.LightPath(270, 160, 390, 70),
   // Index 5: From beam splitter to detector D
-  new QUANTUM.LightPath(260, 180, 400, 285)
+  new PHOTON.LightPath(260, 180, 400, 285)
 ];
 
 // Photon A
-var photonA = new QUANTUM.Photon(130, 70);
+var photonA = new PHOTON.Photon(130, 70);
 photonA.setPoyntingFromPath(0);
 
 // Photon B
-var photonB = new QUANTUM.Photon(120, 285);
+var photonB = new PHOTON.Photon(120, 285);
 photonB.setPoyntingFromPath(2);
 
 // Photon source A
-var sourceA = new QUANTUM.PhotonSource(130, 70);
+var sourceA = new PHOTON.PhotonSource(130, 70);
 sourceA.rotate(180 * Math.atan(3/4) / Math.PI);
 exp.addLabel('Photon<br>Source A', 20, 20);
 
-var sourceB = new QUANTUM.PhotonSource(120, 285);
+var sourceB = new PHOTON.PhotonSource(120, 285);
 sourceB.rotate(-180 * Math.atan(3/4) / Math.PI);
 exp.addLabel('Photon<br>Source B', 20, 290);
 
 // Detector C
-var detectorC = new QUANTUM.PhotonDetector(390, 70);
+var detectorC = new PHOTON.PhotonDetector(390, 70);
 detectorC.rotate(-180 * Math.atan(3/4) / Math.PI);
 exp.addLabel('Detector C', 410, 20);
 
-var detectorD = new QUANTUM.PhotonDetector(400, 285);
+var detectorD = new PHOTON.PhotonDetector(400, 285);
 detectorD.rotate(180 * Math.atan(3/4) / Math.PI);
 exp.addLabel('Detector D', 410, 315);
 
 // Beam splitter
-var splitter = new QUANTUM.BeamSplitter(260, 180);
+var splitter = new PHOTON.BeamSplitter(260, 180);
 splitter.rotate(180);
 exp.addLabel('Beam<br>Splitter', 320, 150)
 
 // Probability amplitude displays
 
-var ampA = new QUANTUM.AmplitudeBox(45, 470, 'Photon A\'s Arrow');
+var ampA = new PHOTON.AmplitudeBox(45, 470, 'Photon A\'s Arrow');
 ampA.setArrowColor('#888');
 ampA.hide();
 app.add(ampA);
 
-var ampB = new QUANTUM.AmplitudeBox(305, 470, 'Photon B\'s Arrow');
+var ampB = new PHOTON.AmplitudeBox(305, 470, 'Photon B\'s Arrow');
 ampB.setArrowColor('#888');
 ampB.hide();
 app.add(ampB);
 
-var amp1 = new QUANTUM.AmplitudeBox(565, 470, 'Photons Get Reflected');
+var amp1 = new PHOTON.AmplitudeBox(565, 470, 'Photons Get Reflected');
 amp1.hide();
 amp1.clearAmplitude();
 app.add(amp1);
 // Needs to animate to 825, 450
 
-var amp2 = new QUANTUM.AmplitudeBox(565, 470);
+var amp2 = new PHOTON.AmplitudeBox(565, 470);
 amp2.setLabel('Photons Get Transmitted', 16);
 amp2.hide();
 amp2.clearAmplitude();
 app.add(amp2);
 
 // Applitude addition window
-var addBox = new QUANTUM.AmplitudeAdditionBox(190, 105);
+var addBox = new PHOTON.AmplitudeAdditionBox(190, 105);
 app.add(addBox);
 addBox.hide();
 
 // Amplitude multiplier object
-var multiplier = new QUANTUM.AmplitudeMultiplier();
+var multiplier = new PHOTON.AmplitudeMultiplier();
 
 //== TEXT FOR EXPERIMENT ==//
 
@@ -388,7 +388,7 @@ var TEXT = {
 //== TUTORIAL SETUP ==//
 
 // Instance of the tutorial object
-var tutorial = new QUANTUM.Tutorial();
+var tutorial = new PHOTON.Tutorial();
 
 // Step 0: introduce exercise
 tutorial.addStep(
@@ -1605,7 +1605,7 @@ tutorial.addStep(
 
 // Starting the experiment
 setTimeout(function(){
-  QUANTUM.children['loading'].$.fadeOut({ duration: 300 });
+  PHOTON.children['loading'].$.fadeOut({ duration: 300 });
   setTimeout(tutorial.start, 500);
 }, 2000);
 
@@ -1614,10 +1614,10 @@ setTimeout(function(){
 // Initializing the application when the HTML document is ready
 $(document).ready(function() {
   // Setting the intro
-  QUANTUM._INTRO_MESSAGE = "Welcome to the exercise on<br>"+
+  PHOTON._INTRO_MESSAGE = "Welcome to the exercise on<br>"+
     "the Hong-Ou-Mandel effect.<br>"+
     "Press START to begin the exercise.";
 
-  // Initializating the QUANTUM object
-  QUANTUM.init(1100, 750);
+  // Initializating the PHOTON object
+  PHOTON.init(1100, 750);
 });

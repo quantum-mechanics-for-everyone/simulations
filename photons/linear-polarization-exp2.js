@@ -1,4 +1,4 @@
-// QUANTUM Engine Tutorials
+// PHOTON Engine Tutorials
 // Copyright (C) 2015-2016 Georgetown University
 // Department of Physics - Washington, DC, USA
 // Written by Dylan Cutler (https://github.com/DCtheTall)
@@ -28,7 +28,7 @@ Linear Polarization Experiment 2:
 ---------------------------------
 Mutliple polarizers
 
-This program uses the QUANTUM engine to
+This program uses the PHOTON engine to
 render an exercise which shows how photons
 travel through multiple polarizers
 
@@ -36,16 +36,16 @@ Author: Dylan Cutler
 
 */
 
-// Setting the QUANTUM.experiment property to a function that starts
+// Setting the PHOTON.experiment property to a function that starts
 // the exercise.
-QUANTUM.experiment = function() {
-  // Reference to the instance of the QUANTUM app
-  var app = QUANTUM.instance
+PHOTON.experiment = function() {
+  // Reference to the instance of the PHOTON app
+  var app = PHOTON.instance
   // Adding a WebGL scene
-  ,   scene = new QUANTUM.SceneBox(10, 60, 980, 450);
+  ,   scene = new PHOTON.SceneBox(10, 60, 980, 450);
   app.add(scene, true);
   // If WebGL is supported, the experiment begins
-  if(QUANTUM._WEB_GL_SUPPORT) beginExperiment();
+  if(PHOTON._WEB_GL_SUPPORT) beginExperiment();
 }
 
 // This function is called when the app knows it can use WebGL
@@ -55,10 +55,10 @@ function beginExperiment() {
 //== EXPERIMENT SETUP ==//
 
 // Reference to the instance of the application
-var app = QUANTUM.instance;
+var app = PHOTON.instance;
 
 // Reference to object that renders the 3D scene
-var scene = QUANTUM.children['SceneBox'];
+var scene = PHOTON.children['SceneBox'];
 scene.placeCamera(-200, 100, 350, -20, 0, 0);
 scene.addPointLight({
   name: 'scene-light',
@@ -70,40 +70,40 @@ scene.addPointLight({
 //-- Adding message box and buttons --//
 
 // Refresh button
-var btRefresh = new QUANTUM.ButtonRefresh();
+var btRefresh = new PHOTON.ButtonRefresh();
 app.add(btRefresh, true);
 
 // New window button
-var btWindow = new QUANTUM.ButtonWindow();
+var btWindow = new PHOTON.ButtonWindow();
 app.add(btWindow, true);
 
 // Play button
-var btPlay = new QUANTUM.ButtonPlay(720, 530, 100, 60);
+var btPlay = new PHOTON.ButtonPlay(720, 530, 100, 60);
 btPlay.disable();
 app.add(btPlay, true);
 
 // Help button
-var btHelp = new QUANTUM.ButtonHelp(850, 530, 80, 60);
+var btHelp = new PHOTON.ButtonHelp(850, 530, 80, 60);
 app.add(btHelp, true);
 
 // NEXT button
-var btNext = new QUANTUM.ButtonNext(750, 620, 160, 50);
+var btNext = new PHOTON.ButtonNext(750, 620, 160, 50);
 btNext.disable();
 app.add(btNext, true);
 
 // BACK button
-var btBack = new QUANTUM.ButtonBack(750, 700, 160, 50);
+var btBack = new PHOTON.ButtonBack(750, 700, 160, 50);
 btBack.disable();
 app.add(btBack, true);
 
 // Message box
-var msg = new QUANTUM.MessageBox(10, 520, 650, 270);
+var msg = new PHOTON.MessageBox(10, 520, 650, 270);
 app.add(msg, true);
 
 //-- Help Layer setup --//
 
-QUANTUM.helpLayerSetup = function() {
-  var helpLayer = QUANTUM.children['help-layer'];
+PHOTON.helpLayerSetup = function() {
+  var helpLayer = PHOTON.children['help-layer'];
 
   with(helpLayer) {
     // Rendering a clone of the help button
@@ -129,28 +129,28 @@ QUANTUM.helpLayerSetup = function() {
 //-- Elements for the experiment --//
 
 // Photon source
-var source = new QUANTUM.PhotonSource3D();
+var source = new PHOTON.PhotonSource3D();
 source.translate(-200, 300, 0);
 
 // Polarizer
 var polarizers = [
-  new QUANTUM.Polarizer(),
-  new QUANTUM.Polarizer()
+  new PHOTON.Polarizer(),
+  new PHOTON.Polarizer()
 ]
 polarizers[0].translate(-50, 300, 0);
 polarizers[1].translate(50, 300, 0);
 polarizers[1].orientToAngle(Math.PI/4);
 
 // Screen
-var screen = new QUANTUM.Screen3D();
+var screen = new PHOTON.Screen3D();
 screen.putInXZPlane('-x');
 screen.translate(200, 300, 0);
 
 // LightPaths
-var lightPaths = QUANTUM.lightPaths;
+var lightPaths = PHOTON.lightPaths;
 
 // Photon
-var photon = new QUANTUM.Photon3D();
+var photon = new PHOTON.Photon3D();
 photon.setPoyntingVector(1, 0);
 photon.polarize('random');
 photon.translate(-200, 300, 0);
@@ -208,7 +208,7 @@ var TEXT = {
 
 //== TUTORIAL SETUP ==//
 
-var tutorial = new QUANTUM.Tutorial();
+var tutorial = new PHOTON.Tutorial();
 
 // Step 0: Introduce exercise with components from first experiment
 tutorial.addStep(
@@ -225,7 +225,7 @@ tutorial.addStep(
       screen.move(1, [0, -300, 0]);
       polarizers[0].move(1, [0, -300, 0], function() {
         source.blink();
-        var path = new QUANTUM.LightPath3D(-200, 0, -190, 0);
+        var path = new PHOTON.LightPath3D(-200, 0, -190, 0);
         path.animateLengthChange(0.5, 390, callback);
       });
     },
@@ -234,7 +234,7 @@ tutorial.addStep(
       photon.translate(0, -300, 0);
       screen.translate(0, -300, 0);
       polarizers[0].translate(0, -300, 0);
-      var path = new QUANTUM.LightPath3D(-200, 0, 200, 0);
+      var path = new PHOTON.LightPath3D(-200, 0, 200, 0);
     }
   },
   {
@@ -422,21 +422,21 @@ tutorial.addStep(
 
 // Starting the experiment
 setTimeout(function(){
-  QUANTUM.children['loading'].$.fadeOut({ duration: 300 });
+  PHOTON.children['loading'].$.fadeOut({ duration: 300 });
   setTimeout(tutorial.start, 500);
 }, 2000);
 
 } // End of the definition of the exercise
 
-// QUANTUM._DEVELOPER_MODE = true;
+// PHOTON._DEVELOPER_MODE = true;
 
 // Initializing the application when the HTML document is ready
 $(document).ready(function() {
   // Setting the intro
-  QUANTUM._INTRO_MESSAGE = "Welcome to the second exercise on<br>"+
+  PHOTON._INTRO_MESSAGE = "Welcome to the second exercise on<br>"+
     "photon polarization.<br>"+
     "Press START to begin the exercise.";
 
-  // Initializating the QUANTUM object
-  QUANTUM.init(1000, 800);
+  // Initializating the PHOTON object
+  PHOTON.init(1000, 800);
 });

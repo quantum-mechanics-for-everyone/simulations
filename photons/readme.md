@@ -1,7 +1,8 @@
-This directory contains simulations that use a code engine, the QUANTUM
-engine (QUANTUM-engine.js). This engine is capable
+This directory contains simulations that use a code engine, the PHOTON
+engine (PHOTON-engine.js). This engine is capable
 of rendering 3D graphics using Three.js and WebGL, and SVG graphics
-using RaphaelJS.
+using RaphaelJS. It uses 2D and 3D animations to teach students
+about the nature of photons.
 
 The engine supports exercises on:
 - [The polarization of light](https://en.wikipedia.org/wiki/Linear_polarization)
@@ -13,7 +14,7 @@ The engine supports exercises on:
 - [Hong-Ou-Mandel effect](https://en.wikipedia.org/wiki/Hong%E2%80%93Ou%E2%80%93Mandel_effect)
 
 Live demos:
-- [Arrow Multiplication](http://dylancutler.us/quantum_sims/_arrow_multiplication.html)
-- [PHoton Polarization](http://dylancutler.us/quantum_sims/_linear_polarization_exp1.html)
-- [Photon Polarization cont.](http://dylancutler.us/quantum_sims/_linear_polarization_free.html)
-- [Polarizing Beam Splitter](http://dylancutler.us/quantum_sims/_polarizing_beam_splitter.html)
+- [Arrow Multiplication](http://dylancutler.us/PHOTON_sims/_arrow_multiplication.html)
+- [PHoton Polarization](http://dylancutler.us/PHOTON_sims/_linear_polarization_exp1.html)
+- [Photon Polarization cont.](http://dylancutler.us/PHOTON_sims/_linear_polarization_free.html)
+- [Polarizing Beam Splitter](http://dylancutler.us/PHOTON_sims/_polarizing_beam_splitter.html)

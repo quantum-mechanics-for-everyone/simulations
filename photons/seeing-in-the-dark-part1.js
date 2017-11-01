@@ -1,4 +1,4 @@
-// QUANTUM Engine Tutorials
+// PHOTON Engine Tutorials
 // Copyright (C) 2015-2016 Georgetown University
 // Department of Physics - Washington, DC, USA
 // Written by Dylan Cutler (https://github.com/DCtheTall)
@@ -24,11 +24,11 @@
 
 /*
 
-Quantum Seeing In The Dark: Part 1
+PHOTON Seeing In The Dark: Part 1
 ---------------------------------
 Photon travels through setup without block
 
-This program uses the QUANTUM engine to
+This program uses the PHOTON engine to
 teach users how we can use photon polarization
 to achieve interaction freee measurement.
 
@@ -39,16 +39,16 @@ Author: Dylan Cutler
 
 */
 
-// Setting the QUANTUM.experiment property to a function that starts
+// Setting the PHOTON.experiment property to a function that starts
 // the exercise.
-QUANTUM.experiment = function() {
-  // Reference to the instance of the QUANTUM app
-  var app = QUANTUM.instance
+PHOTON.experiment = function() {
+  // Reference to the instance of the PHOTON app
+  var app = PHOTON.instance
   // Adding a WebGL scene
-  ,   scene = new QUANTUM.SceneBox(10, 60, 980, 450);
+  ,   scene = new PHOTON.SceneBox(10, 60, 980, 450);
   app.add(scene, true);
   // If WebGL is supported, the experiment begins
-  if(QUANTUM._WEB_GL_SUPPORT) beginExperiment();
+  if(PHOTON._WEB_GL_SUPPORT) beginExperiment();
 }
 
 // This function is called when the app knows it can use WebGL
@@ -58,10 +58,10 @@ function beginExperiment() {
 //== EXPERIMENT SETUP ==//
 
 // Reference to the instance of the application
-var app = QUANTUM.instance;
+var app = PHOTON.instance;
 
 // Reference to object that renders the 3D scene
-var scene = QUANTUM.children['SceneBox'];
+var scene = PHOTON.children['SceneBox'];
 scene.placeCamera(-300, 100, 250, -300, 0, 0);
 scene.addPointLight({
   name: 'scene-light',
@@ -79,50 +79,50 @@ scene.addPointLight({
 //-- Adding message box and buttons --//
 
 // Refresh button
-var btRefresh = new QUANTUM.ButtonRefresh();
+var btRefresh = new PHOTON.ButtonRefresh();
 app.add(btRefresh, true);
 
 // New window button
-var btWindow = new QUANTUM.ButtonWindow();
+var btWindow = new PHOTON.ButtonWindow();
 app.add(btWindow, true);
 
 // Play button
-var btPlay = new QUANTUM.ButtonPlay(720, 530, 100, 60);
+var btPlay = new PHOTON.ButtonPlay(720, 530, 100, 60);
 btPlay.disable();
 app.add(btPlay, true);
 
 // Help button
-var btHelp = new QUANTUM.ButtonHelp(850, 530, 80, 60);
+var btHelp = new PHOTON.ButtonHelp(850, 530, 80, 60);
 app.add(btHelp, true);
 
 // NEXT button
-var btNext = new QUANTUM.ButtonNext(750, 620, 160, 50);
+var btNext = new PHOTON.ButtonNext(750, 620, 160, 50);
 btNext.disable();
 app.add(btNext, true);
 
 // BACK button
-var btBack = new QUANTUM.ButtonBack(750, 700, 160, 50);
+var btBack = new PHOTON.ButtonBack(750, 700, 160, 50);
 btBack.disable();
 app.add(btBack, true);
 
 // Message box
-var msg = new QUANTUM.MessageBox(10, 520, 650, 270);
+var msg = new PHOTON.MessageBox(10, 520, 650, 270);
 app.add(msg, true);
 
 // Polarization projection helper
-var projHelper = new QUANTUM.ProjectionHelper();
+var projHelper = new PHOTON.ProjectionHelper();
 projHelper.hide();
 app.add(projHelper);
 
 // Polarization state indicator
-var indicator = new QUANTUM.PolarizationIndicator(80, 70);
+var indicator = new PHOTON.PolarizationIndicator(80, 70);
 indicator.hide();
 app.add(indicator);
 
 //-- Help Layer setup --//
 
-QUANTUM.helpLayerSetup = function() {
-  var helpLayer = QUANTUM.children['help-layer'];
+PHOTON.helpLayerSetup = function() {
+  var helpLayer = PHOTON.children['help-layer'];
 
   with(helpLayer) {
     // Rendering a clone of the help button
@@ -148,55 +148,55 @@ QUANTUM.helpLayerSetup = function() {
 //-- Elements for the experiment --//
 
 // Photon source
-var source = new QUANTUM.PhotonSource3D();
+var source = new PHOTON.PhotonSource3D();
 source.translate(-300, 300, 0);
 
 // Polarizers
-var polarizer = new QUANTUM.Polarizer();
+var polarizer = new PHOTON.Polarizer();
 polarizer.orientToAngle(Math.PI/2);
 polarizer.translate(-150, 1000, 0);
 
 // Mirrors
 
 // Switchable mirror
-var sMirror = new QUANTUM.Mirror3D();
+var sMirror = new PHOTON.Mirror3D();
 sMirror.translate(0, 1000, 0);
 sMirror.putInXZPlane('+x');
 
 // Mirror for vertical part of the experiment
-var vMirror = new QUANTUM.Mirror3D();
+var vMirror = new PHOTON.Mirror3D();
 vMirror.translate(350, 1000, -350);
 
 // Mirror for horizontal part of the experiment
-var hMirror = new QUANTUM.Mirror3D();
+var hMirror = new PHOTON.Mirror3D();
 hMirror.putInXZPlane('-x');
 hMirror.translate(700, 1000, 0);
 
 // Screens (second one instantiated later)
-var screen = new QUANTUM.Screen3D();
+var screen = new PHOTON.Screen3D();
 screen.putInXZPlane('+x');
 screen.translate(-350, 1000, 0);
 
 // LightPaths
-var lightPaths = QUANTUM.lightPaths;
+var lightPaths = PHOTON.lightPaths;
 
 // Photons (instantiated later)
 var photon
 ,   photon2;
 
 // Polarizing beam splitter
-var splitter = new QUANTUM.PolarizingBeamSplitter();
+var splitter = new PHOTON.PolarizingBeamSplitter();
 splitter.translate(350, 1000, 0);
 
 // Polarization rotator
-var rotator = new QUANTUM.PolarizationRotator(7.5);
+var rotator = new PHOTON.PolarizationRotator(7.5);
 rotator.translate(152.5, 1000, 0);
 
 //== TEXT FOR EXPERIMENT ==//
 
 var TEXT = {
   'welcome':
-    "Welcome to the tutorial on quantum seeing in the dark. Press the cyan help "+
+    "Welcome to the tutorial on PHOTON seeing in the dark. Press the cyan help "+
     "button for information about how to use the application. Press NEXT to continue.",
   'added-photon-source':
     "In this experiment, we will be looking at photons leaving the photon source "+
@@ -339,7 +339,7 @@ var TEXT = {
 
 //== TUTORIAL SETUP ==//
 
-var tutorial = new QUANTUM.Tutorial();
+var tutorial = new PHOTON.Tutorial();
 
 // Step 0: Introduce initial components: source, mirrors on the legs of the
 // interferometer, beam splitter, and rotator
@@ -353,7 +353,7 @@ tutorial.addStep(
   { // Move source into view
     animation: function(callback) {
       source.move(2, [0, -300, 0], function() {
-        photon = new QUANTUM.Photon3D();
+        photon = new PHOTON.Photon3D();
         photon.polarizeIndicator = false;
         photon.setPoyntingVector(1, 0);
         photon.polarize('random');
@@ -363,7 +363,7 @@ tutorial.addStep(
       });
     },
     skip: function() {
-      photon = new QUANTUM.Photon3D();
+      photon = new PHOTON.Photon3D();
       photon.polarizeIndicator = false;
       photon.setPoyntingVector(1, 0);
       photon.polarize('random');
@@ -396,12 +396,12 @@ tutorial.addStep(
         hMirror.move(2, [0, -1000, 0], function() {
           // Animate light paths
           source.blink();
-          var path = new QUANTUM.LightPath3D(-300, 0, -290, 0);
+          var path = new PHOTON.LightPath3D(-300, 0, -290, 0);
           path.animateLengthChange(0.2, 290, function() {
-            var path2 = new QUANTUM.LightPath3D(0, 0, 10, 0);
+            var path2 = new PHOTON.LightPath3D(0, 0, 10, 0);
             path2.animateLengthChange(0.2, 340, function() {
-              var vPath = new QUANTUM.LightPath3D(350, 0, 350, -10)
-              ,   hPath = new QUANTUM.LightPath3D(350, 0, 360, 0);
+              var vPath = new PHOTON.LightPath3D(350, 0, 350, -10)
+              ,   hPath = new PHOTON.LightPath3D(350, 0, 360, 0);
               vPath.animateLengthChange(0.2, 340);
               hPath.animateLengthChange(0.2, 340, callback);
             });
@@ -415,10 +415,10 @@ tutorial.addStep(
       vMirror.translate(0, -1000, 0);
       hMirror.translate(0, -1000, 0);
       var paths = [
-        new QUANTUM.LightPath3D(-300, 0, 0, 0),
-        new QUANTUM.LightPath3D(0, 0, 350, 0),
-        new QUANTUM.LightPath3D(350, 0, 350, -350),
-        new QUANTUM.LightPath3D(350, 0, 700, 0)
+        new PHOTON.LightPath3D(-300, 0, 0, 0),
+        new PHOTON.LightPath3D(0, 0, 350, 0),
+        new PHOTON.LightPath3D(350, 0, 350, -350),
+        new PHOTON.LightPath3D(350, 0, 700, 0)
       ]
     }
   },
@@ -517,7 +517,7 @@ tutorial.addStep(
           photon.shoot(1, 100);
 
           if(photon2 === undefined) {
-            photon2 = new QUANTUM.Photon3D();
+            photon2 = new PHOTON.Photon3D();
             photon2.polarizeIndicator = false;
             photon2.setPoyntingVector(0, -1);
             photon2.polarize(0);
@@ -529,7 +529,7 @@ tutorial.addStep(
       });
     },
     skip: function() {
-      photon2 = new QUANTUM.Photon3D();
+      photon2 = new PHOTON.Photon3D();
       photon2.polarizeIndicator = false;
       photon2.setPoyntingVector(0, -1);
       photon2.polarize(0);
@@ -735,7 +735,7 @@ tutorial.addStep(
 
       scene.placeCamera(200, 700, 200, 200, 0, -100);
 
-      QUANTUM._SMALL_LABELS = true;
+      PHOTON._SMALL_LABELS = true;
       source.addLabel(-100, 100);
       splitter.addLabel(-90, 130);
       vMirror.addLabel(-150, 100);
@@ -743,7 +743,7 @@ tutorial.addStep(
 
       sMirror.translate(0, 1000, 0);
 
-      var path = new QUANTUM.LightPath3D(-300, 0, 0, 0);
+      var path = new PHOTON.LightPath3D(-300, 0, 0, 0);
       index = lightPaths.indexOf(path);
     },
     msg: TEXT['send-photon-through-again'],
@@ -812,7 +812,7 @@ tutorial.addStep(
   },
   { // Send photon through rotator again
     animation: function(callback) {
-      QUANTUM._DEVELOPER_MODE = false;
+      PHOTON._DEVELOPER_MODE = false;
       scene.moveCamera(3, 50, 100, 250, 200, 0, 0, function() {
         photon.shoot(0.9, 90, function() {
           photon.polarizeIndicator = true;
@@ -954,7 +954,7 @@ tutorial.addStep(
       photon.polarizeIndicator = false;
 
       scene.moveCamera(3, 200, 700, 200, 200, 0, -100, function() {
-        var path = new QUANTUM.LightPath3D(0, 0, -150, 0);
+        var path = new PHOTON.LightPath3D(0, 0, -150, 0);
 
         sMirror.move(2, [0, 1000, 0]);
         source.move(2, [0, 1000, 0], function() {
@@ -972,7 +972,7 @@ tutorial.addStep(
   { // Send photon into polarizer
     removeLabels: true,
     animation: function(callback) {
-      QUANTUM._DEVELOPER_MODE = false;
+      PHOTON._DEVELOPER_MODE = false;
       setTimeout(function() { photon.shoot(1.5, 150); }, 1000);
       scene.moveCamera(3, 50, 150, 200, -150, 0, 0, function() {
         photon.shoot(1, 100, function() {
@@ -989,7 +989,7 @@ tutorial.addStep(
       screen.illuminate(0);
       source.translate(0, 1000, 0);
       sMirror.translate(0, 1000, 0);
-      var path = new QUANTUM.LightPath3D(0, 0, -150, 0);
+      var path = new PHOTON.LightPath3D(0, 0, -150, 0);
       scene.placeCamera(50, 150, 200, -150, 0, 0);
       indicator.hide();
     }
@@ -1015,23 +1015,23 @@ tutorial.addStep(
 
 // Starting the experiment
 setTimeout(function(){
-  QUANTUM.children['loading'].$.fadeOut({ duration: 300 });
+  PHOTON.children['loading'].$.fadeOut({ duration: 300 });
   setTimeout(tutorial.start, 500);
 }, 2000);
 
 } // End of the definition of the exercise
 
-// QUANTUM._DEVELOPER_MODE = true;
-// QUANTUM._DEVELOPER_MODE = false;
+// PHOTON._DEVELOPER_MODE = true;
+// PHOTON._DEVELOPER_MODE = false;
 // scene.placeCamera(200, 700, 200, 200, 0, -100);
 
 // Initializing the application when the HTML document is ready
 $(document).ready(function() {
   // Setting the intro
-  QUANTUM._INTRO_MESSAGE = "Welcome to the first exercise on<br>"+
-    "quantum seeing in the dark.<br>"+
+  PHOTON._INTRO_MESSAGE = "Welcome to the first exercise on<br>"+
+    "PHOTON seeing in the dark.<br>"+
     "Press START to begin the exercise.";
 
-  // Initializating the QUANTUM object
-  QUANTUM.init(1000, 800);
+  // Initializating the PHOTON object
+  PHOTON.init(1000, 800);
 });

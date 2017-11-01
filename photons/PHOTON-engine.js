@@ -1,5 +1,5 @@
 // #################################################################################################
-// QUANTUM Engine
+// PHOTON Engine
 // Copyright (C) 2015-2016 Georgetown University
 // Department of Physics - Washington, DC, USA
 // Written by Dylan Cutler (https://github.com/DCtheTall)
@@ -25,15 +25,15 @@
 
 /*
 
-Quantum Mechanics Interactive Engine
+PHOTON Mechanics Interactive Engine
 ------------------------------------
 Author: Dylan Cutler
 --------------------
 
 This is a JavaScript engine for creating interactive animated
-tutorials on Feynman's quantum mechanics and quantum seeing in the
+tutorials on Feynman's PHOTON mechanics and PHOTON seeing in the
 dark. This engine. The engine consists of a single context object,
-QUANTUM, which contains class definitions for different components in
+PHOTON, which contains class definitions for different components in
 the exercise.
 
 The engine uses the following dependencies:
@@ -46,10 +46,10 @@ The engine uses the following dependencies:
 
 */
 
-// This context object, QUANTUM, is defined in the global scope.
+// This context object, PHOTON, is defined in the global scope.
 // This object contains functions and class constructors that are
 // called in each individual exercise.
-var QUANTUM = {
+var PHOTON = {
 
   //== CONSTANTS ==//
 
@@ -152,13 +152,13 @@ var QUANTUM = {
 
   // General child class constructor
   // inputs are:
-  // - Reference for object in QUANTUM scope
+  // - Reference for object in PHOTON scope
   // - x, y coordinates of upper left corner
   // - width (w) and height (h) of child
   Child: function(name, x, y, w, h) {
     // Appending this child to the engine's memory
     this.name = name;
-    QUANTUM.children[name] = this;
+    PHOTON.children[name] = this;
 
     // Memory of children of this object
     this.children = {};
@@ -170,7 +170,7 @@ var QUANTUM = {
     this.y = y;
 
     // Shorthand for scale factor
-    var s = QUANTUM._SCALE_FACTOR;
+    var s = PHOTON._SCALE_FACTOR;
 
     // Child renders HTML div which contains all other graphics
     var div = document.createElement('div');
@@ -203,7 +203,7 @@ var QUANTUM = {
       arguments = Array.prototype.slice.call(arguments);
 
       // CSS gradient prefix
-      var prefix = QUANTUM._BROWSER_PREFIX;
+      var prefix = PHOTON._BROWSER_PREFIX;
 
       // Creating gradient string
       var gradString = 'linear-gradient(' + arguments[0] + ',';
@@ -297,7 +297,7 @@ var QUANTUM = {
 
       if(blinkTimer <= (hold? 300 : 600)) {
         var blinkSize = 10 * Math.pow(Math.sin(Math.PI * blinkTimer / 600), 2);
-        blinkSize *= QUANTUM._SCALE_FACTOR;
+        blinkSize *= PHOTON._SCALE_FACTOR;
         this.$.css({
           'box-shadow': '0 0 '+ Math.floor(blinkSize) +'px '+ Math.floor(blinkSize) +'px #ffff99'
         });
@@ -318,7 +318,7 @@ var QUANTUM = {
 
       if(blinkTimer < 300) {
         var blinkSize = 10 * Math.pow(Math.cos(Math.PI * blinkTimer / 600), 2);
-        blinkSize *= QUANTUM._SCALE_FACTOR;
+        blinkSize *= PHOTON._SCALE_FACTOR;
         this.$.css({
           'box-shadow': '0 0 '+ Math.floor(blinkSize) +'px '+ Math.floor(blinkSize) +'px #ffff99'
         });
@@ -344,22 +344,22 @@ var QUANTUM = {
     if(!child || child.div === undefined) return;
     child.parent.div.removeChild(child.div);
     delete child.parent.children[child.name];
-    delete QUANTUM.children[child.name];
+    delete PHOTON.children[child.name];
   },
   // End of class definition for Child object
 
   // Text box object constructor
   // inputs are
-  // - reference of the object in the QUANTUM scope
+  // - reference of the object in the PHOTON scope
   // - x, y coordinates of top left of the text
   // - font size (pixels)
   // - color of the text (Array)
   TextBox: function(name, x, y, size, color) {
     // This object is an instance of a child object
-    QUANTUM.Child.call(this, name, x, y, 0, 0);
+    PHOTON.Child.call(this, name, x, y, 0, 0);
 
     // Shorthand for the scale
-    var s = QUANTUM._SCALE_FACTOR;
+    var s = PHOTON._SCALE_FACTOR;
 
     // Adding CSS styles to the text box
     this.$.css({
@@ -432,7 +432,7 @@ var QUANTUM = {
     var raphaelChild
     ,   paper = parent.paper
     // Shorthad for scale factor
-    ,   s = QUANTUM._SCALE_FACTOR;
+    ,   s = PHOTON._SCALE_FACTOR;
 
     // Creating graphic
     // different types are below, the type determines what the data object
@@ -512,7 +512,7 @@ var QUANTUM = {
     // Add inner bevel
     this.addInnerBevel = function() {
       this.bevel = raphaelChild.clone();
-      this.bevel.translate(QUANTUM._SCALE_FACTOR, QUANTUM._SCALE_FACTOR);
+      this.bevel.translate(PHOTON._SCALE_FACTOR, PHOTON._SCALE_FACTOR);
       this.bevel.attr('opacity', 0.5);
       if(raphaelChild.attr('stroke') === 'none') this.bevel.attr('fill', '#fff')
       else this.bevel.attr('stroke', '#fff')
@@ -551,7 +551,7 @@ var QUANTUM = {
 
       // Rotating the bevel graphic if it exists
       if(this.bevel) this.bevel.transform(
-        't' + QUANTUM._SCALE_FACTOR +','+ QUANTUM._SCALE_FACTOR +','+
+        't' + PHOTON._SCALE_FACTOR +','+ PHOTON._SCALE_FACTOR +','+
         'r' + theta
       );
     }
@@ -591,7 +591,7 @@ var QUANTUM = {
       t_vector.set(deltaS[0], deltaS[1]);
 
       // Animator object has application render an animation
-      QUANTUM.animator.to(this, {t_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {t_progress: 1}, time, function() {
         t_progress = 0;
         dS.set(0, 0);
         if(callback !== undefined) callback();
@@ -629,7 +629,7 @@ var QUANTUM = {
       targetAngle = angle;
 
       // Animator object has application render the animation
-      QUANTUM.animator.to(this, {r_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {r_progress: 1}, time, function() {
         r_progress = 0;
         if(callback !== undefined) callback();
       });
@@ -672,7 +672,7 @@ var QUANTUM = {
   //   - color of the arrow
   Arrow: function(name, parent, data) {
     // This class is an instance of the RaphaelChild class
-    QUANTUM.RaphaelChild.call(this, name, parent, {
+    PHOTON.RaphaelChild.call(this, name, parent, {
       type: 'path',
       color: data.stroke,
       width: 3,
@@ -700,7 +700,7 @@ var QUANTUM = {
 
     //-- Methods --//
 
-    var s = QUANTUM._SCALE_FACTOR;
+    var s = PHOTON._SCALE_FACTOR;
 
     // Redefining the rotate function so that it rotates the arrow about the
     // end of its tail
@@ -719,19 +719,19 @@ var QUANTUM = {
   // - width, height of the experiment
   ExperimentBox: function(x, y, w, h) {
     // This object is an instance of the Child class
-    QUANTUM.Child.call(this, 'exp-box', x, y, w, h);
+    PHOTON.Child.call(this, 'exp-box', x, y, w, h);
     this.addStroke(100, 100, 100);
     this.fillWithGradient('135deg', [120, 120, 120], [150, 150, 150], [120, 120, 120]);
 
     // This object contains the grid
-    var grid = new QUANTUM.Child('exp-grid', 4, 4, w-10, h-10);
+    var grid = new PHOTON.Child('exp-grid', 4, 4, w-10, h-10);
     grid.addStroke(120, 120, 120);
     grid.fillWithGradient('135deg', [170, 170, 170], [190, 190, 190], [170, 170, 170]);
     grid.addRaphaelPaper();
     this.addChild(grid);
     // Adding horizontal lines
     for(var i = 1; i < h/10 - 1; i++) {
-      var line = new QUANTUM.RaphaelChild('exp-h-'+i, grid, {
+      var line = new PHOTON.RaphaelChild('exp-h-'+i, grid, {
         type: 'path',
         color: '#555',
         width: 0.2,
@@ -741,7 +741,7 @@ var QUANTUM = {
     }
     // Adding vertical lines
     for(var i = 1; i < w/10 - 1; i++) {
-      var line = new QUANTUM.RaphaelChild('exp-v-'+i, grid, {
+      var line = new PHOTON.RaphaelChild('exp-v-'+i, grid, {
         type: 'path',
         color: '#555',
         width: 0.2,
@@ -751,7 +751,7 @@ var QUANTUM = {
     }
 
     // This Child contains the components of the experiment
-    var exp = new QUANTUM.Child('exp', 0, 0, w-10, h-10);
+    var exp = new PHOTON.Child('exp', 0, 0, w-10, h-10);
     exp.addRaphaelPaper();
     grid.addChild(exp);
 
@@ -762,8 +762,8 @@ var QUANTUM = {
     this.addLabel = function(content, x, y, large) {
       large = large === undefined? false : large;
 
-      var label = new QUANTUM.TextBox(content+'-label', x, y, large? 24 : 18, [255, 255, 255])
-      ,   s = QUANTUM._SCALE_FACTOR;
+      var label = new PHOTON.TextBox(content+'-label', x, y, large? 24 : 18, [255, 255, 255])
+      ,   s = PHOTON._SCALE_FACTOR;
       label.$.css('width', (200*s)+'px')
       label.addTextStroke();
       label.setContent(content);
@@ -779,10 +779,10 @@ var QUANTUM = {
     if(name === undefined) name = ''
     else name += '-'
 
-    QUANTUM.photonSources.push(this);
+    PHOTON.photonSources.push(this);
 
     // Experiment box, the parent of all of the graphics
-    var exp = QUANTUM.children['exp'];
+    var exp = PHOTON.children['exp'];
 
     // Graphics
 
@@ -792,17 +792,17 @@ var QUANTUM = {
     // This group is used for the blink feature below as well
     ,   g = exp.paper.group()
     // Reference to the application's scale
-    ,   s = QUANTUM._SCALE_FACTOR;
+    ,   s = PHOTON._SCALE_FACTOR;
 
     // Lens that photon leaves from
-    var lens = new QUANTUM.RaphaelChild('source-'+name+'lens', exp, {
+    var lens = new PHOTON.RaphaelChild('source-'+name+'lens', exp, {
       type: 'ellipse',
       stroke: '#c00',
       color: '90-#f99-#f00',
       cx: cx+15, cy: cy,
       rx: 6, ry: 15
     })
-    ,   highlight = new QUANTUM.RaphaelChild('source-'+name+'highlight', exp, {
+    ,   highlight = new PHOTON.RaphaelChild('source-'+name+'highlight', exp, {
       type: 'ellipse',
       color: '#fff',
       cx: cx+17.5, cy: cy-7.5,
@@ -815,21 +815,21 @@ var QUANTUM = {
     highlight.graphic.attr('opacity', 0.4);
 
     // Metal shells
-    var middleShell = new QUANTUM.RaphaelChild('source-'+name+'mid-shell', exp, {
+    var middleShell = new PHOTON.RaphaelChild('source-'+name+'mid-shell', exp, {
       type: 'rect',
       x: cx-20, y: cy-15,
       w: 35, h: 30,
       stroke: '#444',
       color: '90-#999-#ddd-#999'
     })
-    ,   leftShell = new QUANTUM.RaphaelChild('source-'+name+'left-shell', exp, {
+    ,   leftShell = new PHOTON.RaphaelChild('source-'+name+'left-shell', exp, {
       type: 'rect',
       x: cx-20, y: cy-20,
       w: 5, h: 40,
       stroke: '#444',
 			color: '90-#999-#ddd-#999'
     })
-    ,   rightShell = new QUANTUM.RaphaelChild('source-'+name+'right-shell', exp, {
+    ,   rightShell = new PHOTON.RaphaelChild('source-'+name+'right-shell', exp, {
       type: 'rect',
       x: cx+10, y: cy-20,
       w: 5, h: 40,
@@ -896,30 +896,30 @@ var QUANTUM = {
 
     // Add event on photon source
     this.onPress = function(callback) {
-      QUANTUM.addTapEvent({ source: this, node: group.node }, callback);
+      PHOTON.addTapEvent({ source: this, node: group.node }, callback);
     }
 
     // Remove event
     this.offPress = function(callback) {
-      QUANTUM.removeEvent(group.node);
+      PHOTON.removeEvent(group.node);
     }
 
     // Add color label to photon source
     this.addColorLabel = function() {
-      this.colorLabel = new QUANTUM.TextBox('photon-source-color-label', cx - 45, cy - 55, 30, [255, 0, 0]);
+      this.colorLabel = new PHOTON.TextBox('photon-source-color-label', cx - 45, cy - 55, 30, [255, 0, 0]);
       this.colorLabel.center(100);
       this.colorLabel.setContent('RED');
       this.colorLabel.addTextStroke();
       this.colorLabel.hide();
       this.colorLabel.show(500);
-      QUANTUM.children['exp-box'].addChild(this.colorLabel);
+      PHOTON.children['exp-box'].addChild(this.colorLabel);
     }
 
     // Change the color of the source
     this.changeColor = function() {
       var strokeColor, gradientColor;
       // Change color label
-      switch(QUANTUM._PHOTON_COLOR) {
+      switch(PHOTON._PHOTON_COLOR) {
         case 'RED':
           strokeColor = '#c00';
           gradientColor = '90-#f99-#f00';
@@ -956,10 +956,10 @@ var QUANTUM = {
     else name += '-';
 
     // Adding to photon detectors
-    QUANTUM.photonDetectors.push(this);
+    PHOTON.photonDetectors.push(this);
 
     // Experiment box, the parent of all of the graphics
-    var exp = QUANTUM.children['exp'];
+    var exp = PHOTON.children['exp'];
 
     // Graphics
 
@@ -969,17 +969,17 @@ var QUANTUM = {
     // This group is used for the blink feature below as well
     ,   g = exp.paper.group()
     // Scale of application
-    ,   s = QUANTUM._SCALE_FACTOR;
+    ,   s = PHOTON._SCALE_FACTOR;
 
     // Lens that photon leaves from
-    var lens = new QUANTUM.RaphaelChild('detector-'+name+'lens', exp, {
+    var lens = new PHOTON.RaphaelChild('detector-'+name+'lens', exp, {
       type: 'ellipse',
       color: '90-#fff-#8cf',
  			stroke: '#66f',
       cx: cx-15, cy: cy,
       rx: 6, ry: 15
     })
-    ,   highlight = new QUANTUM.RaphaelChild('detector-'+name+'highlight', exp, {
+    ,   highlight = new PHOTON.RaphaelChild('detector-'+name+'highlight', exp, {
       type: 'ellipse',
       color: '#fff',
       cx: cx-17.5, cy: cy-7.5,
@@ -989,21 +989,21 @@ var QUANTUM = {
     highlight.graphic.attr('opacity', 0.4);
 
     // Metal shells
-    var middleShell = new QUANTUM.RaphaelChild('detector-'+name+'mid-shell', exp, {
+    var middleShell = new PHOTON.RaphaelChild('detector-'+name+'mid-shell', exp, {
       type: 'rect',
       x: cx-15, y: cy-15,
       w: 35, h: 30,
       stroke: '#333',
       color: '90-#555-#999-#555'
     })
-    ,   leftShell = new QUANTUM.RaphaelChild('detector-'+name+'left-shell', exp, {
+    ,   leftShell = new PHOTON.RaphaelChild('detector-'+name+'left-shell', exp, {
       type: 'rect',
       x: cx-15, y: cy-20,
       w: 5, h: 40,
       stroke: '#333',
 			color: '90-#555-#999-#555'
     })
-    ,   rightShell = new QUANTUM.RaphaelChild('detector-'+name+'right-shell', exp, {
+    ,   rightShell = new PHOTON.RaphaelChild('detector-'+name+'right-shell', exp, {
       type: 'rect',
       x: cx+15, y: cy-20,
       w: 5, h: 40,
@@ -1013,7 +1013,7 @@ var QUANTUM = {
     set.push(middleShell.graphic, leftShell.graphic, rightShell.graphic);
 
     // This graphic blinks to indicate the detector sees a photon
-    var blinkerGlass = new QUANTUM.RaphaelChild('detector-'+name+'blinker', exp, {
+    var blinkerGlass = new PHOTON.RaphaelChild('detector-'+name+'blinker', exp, {
       type: 'rect',
       x: cx-5, y: cy-10,
       w: 15, h: 20,
@@ -1040,7 +1040,7 @@ var QUANTUM = {
 
     // Rotate the photon source about its center
     this.rotate = function(degrees) {
-      var s = QUANTUM._SCALE_FACTOR
+      var s = PHOTON._SCALE_FACTOR
       ,   rotation = 'r' + degrees +','+ (cx*s) +','+ (cy*s);
       set.transform(rotation);
       blinkGlow.transform(rotation);
@@ -1104,11 +1104,11 @@ var QUANTUM = {
   // - x2, y2 coordinates of the second point of the path
   // - optional boolean 'refracted' can change the opacity of the path
   LightPath: function(x1, y1, x2, y2, refracted) {
-    var exp = QUANTUM.children['exp']
-    ,   i = QUANTUM.lightPaths.length;
+    var exp = PHOTON.children['exp']
+    ,   i = PHOTON.lightPaths.length;
 
     // This object is an instance of the RaphaelChild class
-    QUANTUM.RaphaelChild.call(this, 'light-path-'+i, exp, {
+    PHOTON.RaphaelChild.call(this, 'light-path-'+i, exp, {
       type: 'path',
       color: '#f00',
       width: 1.5,
@@ -1130,7 +1130,7 @@ var QUANTUM = {
 
     // Blink feature to make path glow
     this.blink = function() {
-      var s = QUANTUM._SCALE_FACTOR;
+      var s = PHOTON._SCALE_FACTOR;
       this.graphic.attr({ 'stroke-width': 2.5*s, stroke: '#f90' });
 
       this.glow = this.graphic.glow({ size: 15*s, color: '#ff0' });
@@ -1142,7 +1142,7 @@ var QUANTUM = {
     // Blink off
     this.blinkOff = function() {
       if(this.graphic.attr('stroke') === '#f90') {
-        var s = QUANTUM._SCALE_FACTOR;
+        var s = PHOTON._SCALE_FACTOR;
         this.graphic.attr({ 'stroke-width': 1.5*s, stroke: '#f00' });
         this.glow.remove();
         this.glow = undefined;
@@ -1150,8 +1150,8 @@ var QUANTUM = {
       }
     }
 
-    // Adding this to the memory in QUANTUM object
-    QUANTUM.lightPaths.push(this);
+    // Adding this to the memory in PHOTON object
+    PHOTON.lightPaths.push(this);
   }, // End of LightPath class
 
   // Photon constructor
@@ -1159,10 +1159,10 @@ var QUANTUM = {
   // inputs are:
   // - x, y coordinates of the photon's initial position
   Photon: function(x, y) {
-    var exp = QUANTUM.children['exp'];
+    var exp = PHOTON.children['exp'];
 
     // This is an instance of the RaphaelChild class
-    QUANTUM.RaphaelChild.call(this, 'photon', exp, {
+    PHOTON.RaphaelChild.call(this, 'photon', exp, {
       type: 'ellipse',
       color: '#f00',
       rx: 5, ry: 5,
@@ -1176,7 +1176,7 @@ var QUANTUM = {
 
     // Set photon's poynting vector
     this.setPoyntingFromPath = function(index) {
-      var path = QUANTUM.lightPaths[index]
+      var path = PHOTON.lightPaths[index]
       ,   x = (path.x2 - path.x1) / path.length
       ,   y = (path.y2 - path.y1) / path.length;
       poynting.x = x; poynting.y = y;
@@ -1195,10 +1195,10 @@ var QUANTUM = {
   // - x, y coordinates of top left corner
   // - initial width (w) and height (h) of the glass
   Glass: function(x, y, w, h) {
-    var exp = QUANTUM.children['exp'];
+    var exp = PHOTON.children['exp'];
 
     // This object is an instance of the RaphaelChild class
-    QUANTUM.RaphaelChild.call(this, 'glass', exp, {
+    PHOTON.RaphaelChild.call(this, 'glass', exp, {
       type: 'rect',
       type: 'rect',
       x: x, y: y,
@@ -1220,15 +1220,15 @@ var QUANTUM = {
       this.x -= dL/2;
 
       this.graphic.attr({
-        'x': this.x * QUANTUM._SCALE_FACTOR,
-        'width': this.length * QUANTUM._SCALE_FACTOR
+        'x': this.x * PHOTON._SCALE_FACTOR,
+        'width': this.length * PHOTON._SCALE_FACTOR
       });
     }
 
     // Get the phase shift the glass causes in the Mach-Zehnder interferometer (deg)
     this.getDelta = function() {
-      var dTheta = QUANTUM._PHOTON_COLOR === 'RED'? 5 :
-        QUANTUM._PHOTON_COLOR === 'GREEN'? 7.5 : 10;
+      var dTheta = PHOTON._PHOTON_COLOR === 'RED'? 5 :
+        PHOTON._PHOTON_COLOR === 'GREEN'? 7.5 : 10;
 
       return 0.2 * this.length * dTheta;
     }
@@ -1239,11 +1239,11 @@ var QUANTUM = {
   // inputs are:
   // - cx, cy coordinates of center of the interface the photon interacts with
   Mirror: function(cx, cy) {
-    var i = QUANTUM.mirrors.length
-    ,   exp = QUANTUM.children['exp'];
+    var i = PHOTON.mirrors.length
+    ,   exp = PHOTON.children['exp'];
 
     // This object is a instance of the RaphaelChild class
-    QUANTUM.RaphaelChild.call(this, 'mirror-'+i, exp, {
+    PHOTON.RaphaelChild.call(this, 'mirror-'+i, exp, {
       type: 'rect',
       x: cx-40, y: cy+2,
       w: 80, h: 10,
@@ -1251,12 +1251,12 @@ var QUANTUM = {
       stroke: '#66f'
     });
     this.graphic.toBack();
-    QUANTUM.mirrors.push(this);
+    PHOTON.mirrors.push(this);
 
     // Changing the rotate function to have the mirror rotate about
     // the center of the interface (easier to position mirros this way)
     this.rotate = function(degrees) {
-      var s = QUANTUM._SCALE_FACTOR;
+      var s = PHOTON._SCALE_FACTOR;
       this.graphic.transform('r'+ degrees +','+ (cx*s) +','+ (cy*s));
     }
   }, // End of Mirror class
@@ -1266,17 +1266,17 @@ var QUANTUM = {
   // inputs are:
   // - cx, cy coordinates of the center mirrored side of the beam splitter
   BeamSplitter: function(cx, cy) {
-    var i = QUANTUM.beamSplitters.length
-    ,   exp = QUANTUM.children['exp'];
+    var i = PHOTON.beamSplitters.length
+    ,   exp = PHOTON.children['exp'];
 
-    var mirror = new QUANTUM.RaphaelChild('bs-mirror-'+i, exp, {
+    var mirror = new PHOTON.RaphaelChild('bs-mirror-'+i, exp, {
       type: 'rect',
       x: cx-40, y: cy,
       w: 80, h: 4,
       color: '0-#8cf-#fff-#8cf',
  			stroke: '#66f'
     })
-    ,   glass = new QUANTUM.RaphaelChild('bs-glass-'+i, exp, {
+    ,   glass = new PHOTON.RaphaelChild('bs-glass-'+i, exp, {
       type: 'rect',
       x: cx-40, y: cy+4,
       w: 80, h: 16,
@@ -1289,7 +1289,7 @@ var QUANTUM = {
 
     // Rotate about center
     this.rotate = function(degrees) {
-      var s = QUANTUM._SCALE_FACTOR
+      var s = PHOTON._SCALE_FACTOR
       ,   rotation = 'r'+ degrees +','+ (cx*s) +','+ (cy*s);
       mirror.graphic.transform(rotation);
       glass.graphic.transform(rotation);
@@ -1304,24 +1304,24 @@ var QUANTUM = {
   // - x, y coordinates of the top left corner of the window
   // - the content of the label in the window
   AmplitudeBox: function(x, y, labelContent) {
-    var i = QUANTUM.amplitudeBoxes.length
-    ,   s = QUANTUM._SCALE_FACTOR;
+    var i = PHOTON.amplitudeBoxes.length
+    ,   s = PHOTON._SCALE_FACTOR;
 
     // This object is an instance of the Child class
-    QUANTUM.Child.call(this, 'amp-box-'+i, x, y, 200, 230);
+    PHOTON.Child.call(this, 'amp-box-'+i, x, y, 200, 230);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.addShadow();
-    QUANTUM.amplitudeBoxes.push(this);
+    PHOTON.amplitudeBoxes.push(this);
 
     // Label
-    var label = new QUANTUM.TextBox('amp-box-label-'+i, 0, 10, 18, [100, 100, 100]);
+    var label = new PHOTON.TextBox('amp-box-label-'+i, 0, 10, 18, [100, 100, 100]);
     label.center(200);
     label.setContent(labelContent);
     this.addChild(label);
 
     // Text resides in this Child object
-    var contentBox = new QUANTUM.Child('amp-box-content-'+i, 10, 40, 180, 180);
+    var contentBox = new PHOTON.Child('amp-box-content-'+i, 10, 40, 180, 180);
     contentBox.fillWithGradient('90deg', [240, 240, 210], [255, 255, 230]);
     contentBox.addStroke(150, 140, 100);
     contentBox.addRaphaelPaper();
@@ -1330,7 +1330,7 @@ var QUANTUM = {
     // Display text
 
     // Amplitude
-    var ampText = new QUANTUM.TextBox('amp-box-'+i+'-amp-text', 0, 4, 16, [0, 0, 0]);
+    var ampText = new PHOTON.TextBox('amp-box-'+i+'-amp-text', 0, 4, 16, [0, 0, 0]);
     ampText.center(180);
     ampText.setContent('Amplitude: 1');
     contentBox.addChild(ampText);
@@ -1339,7 +1339,7 @@ var QUANTUM = {
 		var radTwoStr = '&radic;<span style="text-decoration: overline">2</span>'
 
     // Clock time
-    var clockTime = new QUANTUM.TextBox('amp-box-'+i+'-clock-time', 0, 150, 16, [0, 0, 0]);
+    var clockTime = new PHOTON.TextBox('amp-box-'+i+'-clock-time', 0, 150, 16, [0, 0, 0]);
     clockTime.center(180);
     clockTime.setContent('Clock Time: 0:00');
     contentBox.addChild(clockTime);
@@ -1347,14 +1347,14 @@ var QUANTUM = {
     // 2D graphics
 
     // Axes that show horizontal and vertical direction
-    var vertical = new QUANTUM.RaphaelChild('indicator-vertical-axis', contentBox, {
+    var vertical = new PHOTON.RaphaelChild('indicator-vertical-axis', contentBox, {
       type: 'path',
       width: 2,
       color: '#ddc',
       x0: 90, y0: 15
     });
     vertical.addPoint(90, 165);
-    var horizontal = new QUANTUM.RaphaelChild('indicator-horizontal-axis', contentBox, {
+    var horizontal = new PHOTON.RaphaelChild('indicator-horizontal-axis', contentBox, {
       type: 'path',
       width: 2,
       color: '#ddc',
@@ -1364,7 +1364,7 @@ var QUANTUM = {
 
     // Arrow that represents the amplitude
 
-    var arrow = new QUANTUM.Arrow('amp-box-'+i+'-arrow', contentBox, {
+    var arrow = new PHOTON.Arrow('amp-box-'+i+'-arrow', contentBox, {
       x: 90, y: 90,
       length: 60, width: 4,
       headWidth: 15, headLength: 15,
@@ -1430,7 +1430,7 @@ var QUANTUM = {
     this.setLabel = function(content, size) {
       label.setContent(content);
       if(size !== undefined) {
-        var s = QUANTUM._SCALE_FACTOR;
+        var s = PHOTON._SCALE_FACTOR;
         label.$.css('font-size', (size * s)+'px');
       }
     }
@@ -1491,7 +1491,7 @@ var QUANTUM = {
 
       // Changing arrow graphic
       if(arrow !== undefined) arrow.remove();
-      arrow = new QUANTUM.Arrow('amp-box-'+i+'-arrow', contentBox, {
+      arrow = new PHOTON.Arrow('amp-box-'+i+'-arrow', contentBox, {
         x: 90, y: 90,
         length: len, width: 4,
         headWidth: hw, headLength: hw,
@@ -1548,7 +1548,7 @@ var QUANTUM = {
     //            to be in line with the arrow
     this.drawArc = function(angle, rotated) {
       // Arc is an SVG path
-      this.arc = new QUANTUM.RaphaelChild('rotation-arc', contentBox, {
+      this.arc = new PHOTON.RaphaelChild('rotation-arc', contentBox, {
         type: 'path',
         width: 1.5,
         color: '#99a',
@@ -1632,8 +1632,8 @@ var QUANTUM = {
     this.animateRotation = function(data) {
       initialAngle = theta;
       if(data.hasOwnProperty('distance')) {
-        dTheta = QUANTUM._PHOTON_COLOR === 'RED'? 5
-          : QUANTUM._PHOTON_COLOR === 'GREEN'? 7.5
+        dTheta = PHOTON._PHOTON_COLOR === 'RED'? 5
+          : PHOTON._PHOTON_COLOR === 'GREEN'? 7.5
           : 10;
         finalAngle = theta + dTheta * data.distance;
       }
@@ -1641,7 +1641,7 @@ var QUANTUM = {
         finalAngle = data.angle + theta;
       }
 
-      QUANTUM.animator.to(this, {r_progress: 1}, data.time, function() {
+      PHOTON.animator.to(this, {r_progress: 1}, data.time, function() {
         r_progress = 0;
         if(data.hasOwnProperty('callback')) data.callback();
       })
@@ -1669,7 +1669,7 @@ var QUANTUM = {
       initialAmplitude = amplitude;
       finalAmplitude = finalAmp;
 
-      QUANTUM.animator.to(this, {s_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {s_progress: 1}, time, function() {
         s_progress = 0;
         if(callback !== undefined) callback();
       });
@@ -1700,12 +1700,12 @@ var QUANTUM = {
       }
       // Angle the first component arrow rotates
       ,   theta1 = darkOrBright?
-        initialAnglesDark[QUANTUM._PHOTON_COLOR] + 180 + delta
-        : initialAnglesBright[QUANTUM._PHOTON_COLOR] + delta
+        initialAnglesDark[PHOTON._PHOTON_COLOR] + 180 + delta
+        : initialAnglesBright[PHOTON._PHOTON_COLOR] + delta
       // Angle the second component arrow rotates
       ,   theta2 = darkOrBright?
-        initialAnglesDark[QUANTUM._PHOTON_COLOR]
-        : initialAnglesBright[QUANTUM._PHOTON_COLOR]
+        initialAnglesDark[PHOTON._PHOTON_COLOR]
+        : initialAnglesBright[PHOTON._PHOTON_COLOR]
       // Center of the second arrow
       ,   secondArrowCenter = {
         x: 90 + 30 * Math.sin(Math.PI * theta1 / 180),
@@ -1726,7 +1726,7 @@ var QUANTUM = {
       // Drawing arrows for display
 
       // Drawing first component arrow from center
-      this.firstArrow = new QUANTUM.Arrow('first-arrow', contentBox, {
+      this.firstArrow = new PHOTON.Arrow('first-arrow', contentBox, {
         x: 90, y: 90,
         length: 30, width: 4,
         headWidth: Math.pow(0.5, 0.25) * 15,
@@ -1735,7 +1735,7 @@ var QUANTUM = {
       });
       this.firstArrow.rotate(theta1);
       // Drawing second component arrow
-      this.secondArrow = new QUANTUM.Arrow('second-arrow', contentBox, {
+      this.secondArrow = new PHOTON.Arrow('second-arrow', contentBox, {
         x: secondArrowCenter.x, y: secondArrowCenter.y,
         length: 30, width: 4,
         headWidth: Math.pow(0.5, 0.25) * 15,
@@ -1745,14 +1745,14 @@ var QUANTUM = {
       this.secondArrow.rotate(theta2);
       // Final arrow
       if(amplitude > 0.1) {
-        this.finalArrow = new QUANTUM.Arrow('final-arrow', contentBox, {
+        this.finalArrow = new PHOTON.Arrow('final-arrow', contentBox, {
           x: 90, y: 90,
           length: 60 * amplitude, width: 6,
           headWidth: Math.pow(amplitude, 0.25) * 20,
           headLength: Math.pow(amplitude, 0.25) * 20,
           stroke: 'none',
-          color: QUANTUM._PHOTON_COLOR === 'RED'? '#f00' :
-            QUANTUM._PHOTON_COLOR === 'GREEN'? '#0b0' : '#33f'
+          color: PHOTON._PHOTON_COLOR === 'RED'? '#f00' :
+            PHOTON._PHOTON_COLOR === 'GREEN'? '#0b0' : '#33f'
         });
         this.finalArrow.rotate(finalTheta + (lx < 0? 180 : 0));
       }
@@ -1766,10 +1766,10 @@ var QUANTUM = {
   // Amplitude Multiplier class constructor
   // this class renders graphics and animates the arrow multiplication process
   AmplitudeMultiplier: function() {
-    QUANTUM.children['multiplier'] = this;
+    PHOTON.children['multiplier'] = this;
 
     // Application scale
-    var s = QUANTUM._SCALE_FACTOR;
+    var s = PHOTON._SCALE_FACTOR;
 
     // This method creates a Child object which contains the graphics for
     // the multiplication. This method also draws the addition and
@@ -1786,9 +1786,9 @@ var QUANTUM = {
       ,   y = parseFloat(ampBoxA.$.css('top')) / s;
 
       // Child object
-      this.container = new QUANTUM.Child('multiplication-layer', x1, y, (x2 - x1), 250);
+      this.container = new PHOTON.Child('multiplication-layer', x1, y, (x2 - x1), 250);
       this.container.addRaphaelPaper();
-      QUANTUM.instance.add(this.container);
+      PHOTON.instance.add(this.container);
 
       //  Multiplication and addition icons
 
@@ -1796,11 +1796,11 @@ var QUANTUM = {
       // input is type, will be 'addition' or 'multiplication'
       function makeOperator(type) {
         // Icon is containted in the multiplication layer
-        var container = QUANTUM.children['multiplication-layer']
+        var container = PHOTON.children['multiplication-layer']
         // Y coordinate of icon
         ,   y = type === 'addition'? 200 : 55
         // Icon graphic is an instance of the RaphaelChild
-        ,   icon = new QUANTUM.RaphaelChild(type+'operator', container, {
+        ,   icon = new PHOTON.RaphaelChild(type+'operator', container, {
           type: 'path',
           width: 1.5,
           color: '#000',
@@ -1842,9 +1842,9 @@ var QUANTUM = {
       // the given y coordinate in the multiplication layer
       function makeEqualSign(y) {
         // Icon is containted in the multiplication layer
-        var container = QUANTUM.children['multiplication-layer']
+        var container = PHOTON.children['multiplication-layer']
         // Top icon
-        ,   topIcon = new QUANTUM.RaphaelChild('top-equal-icon-'+y, container, {
+        ,   topIcon = new PHOTON.RaphaelChild('top-equal-icon-'+y, container, {
           type: 'rect',
           x: 455, y: y,
           w: 75, h: 15,
@@ -1853,7 +1853,7 @@ var QUANTUM = {
           width: 1.5
         })
         // Bottom icon
-        ,   bottomIcon = new QUANTUM.RaphaelChild('bottom-equal-'+y, container, {
+        ,   bottomIcon = new PHOTON.RaphaelChild('bottom-equal-'+y, container, {
           type: 'rect',
           x: 455, y: y+30,
           w: 75, h: 15,
@@ -1894,7 +1894,7 @@ var QUANTUM = {
     // Remove multiplication layer
     this.removeMultiplicationLayer = function() {
       // Remove the multiplication layer
-      QUANTUM.removeChild(this.container);
+      PHOTON.removeChild(this.container);
       // All of the properties get set to undefined
       this.ampBoxA = undefined;
       this.ampBoxB = undefined;
@@ -1997,20 +1997,20 @@ var QUANTUM = {
   // inputs are x, y coordinates of top left corner of the window
   AmplitudeAdditionBox: function(x, y) {
     // This object is an instance of the Child class
-    QUANTUM.Child.call(this, 'addition-box', x, y, 250, 280);
+    PHOTON.Child.call(this, 'addition-box', x, y, 250, 280);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.$.css('z-index', 2);
     this.addShadow();
 
     // Label
-    var label = new QUANTUM.TextBox('addition-box-label', 0, 6, 22, [100, 100, 100]);
+    var label = new PHOTON.TextBox('addition-box-label', 0, 6, 22, [100, 100, 100]);
     label.center(250);
     label.setContent('Final Amplitude');
     this.addChild(label);
 
     // Text resides in this Child object
-    var contentBox = new QUANTUM.Child('amp-box-content-', 10, 40, 230, 230);
+    var contentBox = new PHOTON.Child('amp-box-content-', 10, 40, 230, 230);
     contentBox.fillWithGradient('90deg', [240, 240, 210], [255, 255, 230]);
     contentBox.addStroke(150, 140, 100);
     contentBox.addRaphaelPaper();
@@ -2019,26 +2019,26 @@ var QUANTUM = {
     // Display text
 
     // Amplitude
-    var ampText = new QUANTUM.TextBox('addition-box-amp-text', 0, 4, 18, [0, 0, 0]);
+    var ampText = new PHOTON.TextBox('addition-box-amp-text', 0, 4, 18, [0, 0, 0]);
     ampText.center(230);
     ampText.setContent('Amplitude: ');
     contentBox.addChild(ampText);
 
     // Clock time
-    var probText = new QUANTUM.TextBox('addition-box-prob-text', 0, 200, 18, [0, 0, 0]);
+    var probText = new PHOTON.TextBox('addition-box-prob-text', 0, 200, 18, [0, 0, 0]);
     probText.center(230);
     probText.setContent('Probability: ');
     contentBox.addChild(probText);
 
     // Axes that show horizontal and vertical direction
-    var vertical = new QUANTUM.RaphaelChild('indicator-vertical-axis', contentBox, {
+    var vertical = new PHOTON.RaphaelChild('indicator-vertical-axis', contentBox, {
       type: 'path',
       width: 2,
       color: '#ddc',
       x0: 115, y0: 20
     });
     vertical.addPoint(115, 210);
-    var horizontal = new QUANTUM.RaphaelChild('indicator-horizontal-axis', contentBox, {
+    var horizontal = new PHOTON.RaphaelChild('indicator-horizontal-axis', contentBox, {
       type: 'path',
       width: 2,
       color: '#ddc',
@@ -2067,13 +2067,13 @@ var QUANTUM = {
     // inputs are two AmplitudeBox objects which display amplitudes the
     // window is adding
     this.addAmplitudes = function(ampBox1, ampBox2, callback) {
-      var s = QUANTUM._SCALE_FACTOR
+      var s = PHOTON._SCALE_FACTOR
 
       // Drawing first arrow
       ,   len1 = 60 * ampBox1.amplitude + (1 - Math.exp(-1) * Math.exp(ampBox1.amplitude)) * 20
  			,   hw1 = 15 * Math.pow(ampBox1.amplitude, 0.25) + 2
       // First arrow
-      ,   arrow1 = new QUANTUM.Arrow('addition-box-arrow-1', contentBox, {
+      ,   arrow1 = new PHOTON.Arrow('addition-box-arrow-1', contentBox, {
         x: 115, y: 115,
         length: len1,
         width: 4,
@@ -2101,7 +2101,7 @@ var QUANTUM = {
       ,   cx = 115 + len1 * Math.sin(Math.PI * ampBox1.theta / 180)
       ,   cy = 115 - len1 * Math.cos(Math.PI * ampBox1.theta / 180)
       // Second arrow
-      ,   arrow2 = new QUANTUM.Arrow('addiition-box-arrow-2', contentBox, {
+      ,   arrow2 = new PHOTON.Arrow('addiition-box-arrow-2', contentBox, {
         x: cx, y: cy,
         length: len2,
         width: 4,
@@ -2141,7 +2141,7 @@ var QUANTUM = {
       var finalArrow, glow, $glow, $finalArrow;
       if(len > 6) {
         // Drawing final arrow
-        finalArrow = new QUANTUM.Arrow('addition-box-final-arrow', contentBox, {
+        finalArrow = new PHOTON.Arrow('addition-box-final-arrow', contentBox, {
           x: 115, y: 115,
           length: len, width: 6,
           headWidth: len/4 + 5, headLength: len/4 + 5,
@@ -2233,25 +2233,25 @@ var QUANTUM = {
   // inputs are: x, y coordinates of top left corner of window
   ProbabilityDisplay: function(x, y) {
     // This object is an instance of the Child class
-    QUANTUM.Child.call(this, 'prob-display-'+x, x, y, 120, 90);
+    PHOTON.Child.call(this, 'prob-display-'+x, x, y, 120, 90);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.addShadow();
 
     // Add label
-    var label = new QUANTUM.TextBox('prob-label-'+x, 0, 5, 18, [100, 100, 100]);
+    var label = new PHOTON.TextBox('prob-label-'+x, 0, 5, 18, [100, 100, 100]);
     label.center(120);
     label.setContent('Probability');
     this.addChild(label);
 
     // Add screen
-    var screen = new QUANTUM.Child('prob-screen-'+x, 5, 40, 110, 45);
+    var screen = new PHOTON.Child('prob-screen-'+x, 5, 40, 110, 45);
     screen.fill(50, 50, 50);
     this.addChild(screen);
 
     // Glowing text
-    var text = new QUANTUM.TextBox('prob-text-'+x, 10, 10, 25, [255, 255, 255])
-    ,   s = QUANTUM._SCALE_FACTOR;
+    var text = new PHOTON.TextBox('prob-text-'+x, 10, 10, 25, [255, 255, 255])
+    ,   s = PHOTON._SCALE_FACTOR;
     text.$.css({
       'width': (90 * s) + 'px',
       'text-align': 'right',
@@ -2274,9 +2274,9 @@ var QUANTUM = {
 
     // Set probability
     this.set = function(p) {
-      var color = QUANTUM._PHOTON_COLOR === 'RED'? '#ff0000' :
-        QUANTUM._PHOTON_COLOR === 'GREEN'? '#00ff00' : '#0000ff';
-      var s = QUANTUM._SCALE_FACTOR;
+      var color = PHOTON._PHOTON_COLOR === 'RED'? '#ff0000' :
+        PHOTON._PHOTON_COLOR === 'GREEN'? '#00ff00' : '#0000ff';
+      var s = PHOTON._SCALE_FACTOR;
 
       text.$.css('text-shadow', '0px 0px '+ (5*s) +'px '+ color);
       text.setContent(Math.round(1000 * p)/10 + '%');
@@ -2298,8 +2298,8 @@ var QUANTUM = {
   DynamicCamera: function(aspectRatio) {
     // Instantiate Three.js perspective camera object
     var camera = new THREE.PerspectiveCamera(45, aspectRatio, 1, 10000);
-    QUANTUM.camera = camera;
-    QUANTUM.scene.add(camera);
+    PHOTON.camera = camera;
+    PHOTON.scene.add(camera);
 
     // Eye vector (position of the camera)
     var eye = new THREE.Vector3()
@@ -2345,23 +2345,23 @@ var QUANTUM = {
     // If WebGL is not available, the app will not run
     // and an error message is displayed which instructs users to
     // try the app on another device
-    if(!QUANTUM._WEB_GL_SUPPORT)
+    if(!PHOTON._WEB_GL_SUPPORT)
     { // Script runs if WebGL can not be used
 
       // Prevents error
-      var w = QUANTUM.instance.w
-      ,   h = QUANTUM.instance.h;
-      QUANTUM.Child.call(this, 'SceneBox', 0, 0, w, h);
+      var w = PHOTON.instance.w
+      ,   h = PHOTON.instance.h;
+      PHOTON.Child.call(this, 'SceneBox', 0, 0, w, h);
       this.fill(0, 0, 0);
 
-      for(key in QUANTUM.children) {
-        var child = QUANTUM.children[key];
-        if(child.parent !== undefined) QUANTUM.removeChild(child);
+      for(key in PHOTON.children) {
+        var child = PHOTON.children[key];
+        if(child.parent !== undefined) PHOTON.removeChild(child);
       }
       console.log('This app cannot run without WebGL. Please revisit this webpage on another device or browser.');
 
       // Error message to user
-      var msg = new QUANTUM.TextBox('webgl-error-messag', 0, h/3, 32, [255, 255, 255]);
+      var msg = new PHOTON.TextBox('webgl-error-messag', 0, h/3, 32, [255, 255, 255]);
       msg.center(w);
       msg.setContent(
         'Error: This device or web browser does not support WebGL '+
@@ -2375,15 +2375,15 @@ var QUANTUM = {
     { // WebGL successfully detected, and the app can render the scene
 
     // Instantiating Child object which contains the scene
-    QUANTUM.Child.call(this, 'SceneBox', x, y, w, h);
+    PHOTON.Child.call(this, 'SceneBox', x, y, w, h);
 
     // Creating Three.js scene
     var scene = new THREE.Scene()
-    QUANTUM.scene = scene;
+    PHOTON.scene = scene;
 
     // Renderer
     var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-    ,   s = QUANTUM._SCALE_FACTOR;
+    ,   s = PHOTON._SCALE_FACTOR;
     renderer.setSize(w*s, h*s);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x2c3c3c);
@@ -2393,7 +2393,7 @@ var QUANTUM = {
 			'left': '0px',
 			'top': '0px'
 		});
-		QUANTUM.renderer = renderer;
+		PHOTON.renderer = renderer;
 
     // Lighting
 
@@ -2418,12 +2418,12 @@ var QUANTUM = {
       // THREE.CameraHelper(light.shadow);
       scene.add(light);
       lights[options.name] = light;
-      for(key in QUANTUM.threeChildren)
-        QUANTUM.threeChildren[key].mesh.material.needsUpdate = true;
+      for(key in PHOTON.threeChildren)
+        PHOTON.threeChildren[key].mesh.material.needsUpdate = true;
     }
 
     // Camera object
-    var Camera = new QUANTUM.DynamicCamera(w / h);
+    var Camera = new PHOTON.DynamicCamera(w / h);
 
     // Remove point light
     this.removePointLight = function(name) {
@@ -2486,7 +2486,7 @@ var QUANTUM = {
       newPosition.set(eyeX, eyeY, eyeZ);
       newLookAt.set(atX, atY, atZ);
 
-      QUANTUM.animator.to(this, {progress: 1}, time, function() {
+      PHOTON.animator.to(this, {progress: 1}, time, function() {
         progress = 0;
         if(callback) callback();
       });
@@ -2494,7 +2494,7 @@ var QUANTUM = {
 
     // If the app is in developer mode, this object adds Cartesian coordinate
     // axes to the scene
-    if(QUANTUM._DEVELOPER_MODE) {
+    if(PHOTON._DEVELOPER_MODE) {
       // I use the same geometry and material object arguments for all 3
       var args = [
         {
@@ -2510,12 +2510,12 @@ var QUANTUM = {
         }
       ]
       // x-axis
-      var x_axis = new QUANTUM.ThreeChild('x-axis', args[0], args[1]);
+      var x_axis = new PHOTON.ThreeChild('x-axis', args[0], args[1]);
       x_axis.rotate(Math.PI/2, 0, 0, 1);
       // y-axis
-      var y_axis = new QUANTUM.ThreeChild('y-axis', args[0], args[1]);
+      var y_axis = new PHOTON.ThreeChild('y-axis', args[0], args[1]);
       // z-axis
-      var z_axis = new QUANTUM.ThreeChild('z-axis', args[0], args[1]);
+      var z_axis = new PHOTON.ThreeChild('z-axis', args[0], args[1]);
       z_axis.rotate(Math.PI/2, 1, 0, 0);
     }
 
@@ -2528,7 +2528,7 @@ var QUANTUM = {
 
     // This method creates a new Child on top of the scene were arrows are drawn
     this.addArrowLayer = function() {
-      arrowLayer = new QUANTUM.Child('scene-arrow-layer', 0, 0, w, h);
+      arrowLayer = new PHOTON.Child('scene-arrow-layer', 0, 0, w, h);
       arrowLayer.addRaphaelPaper();
       this.addChild(arrowLayer);
     }
@@ -2539,7 +2539,7 @@ var QUANTUM = {
     this.addArrow = function(x, y, theta) {
       // Render an arrow
       var i = arrows.length
-      ,   arrow = new QUANTUM.Arrow('arrow-'+i, arrowLayer, {
+      ,   arrow = new PHOTON.Arrow('arrow-'+i, arrowLayer, {
         x: x + 100, y: y,
         length: 100, width: 20,
         headWidth: 40, headLength: 30,
@@ -2574,7 +2574,7 @@ var QUANTUM = {
   // - geometry object: contains information about the geometry of the mesh
   // - material object: contains information about the material of the mesh
   ThreeChild: function(name, g, m) {
-    QUANTUM.threeChildren[name] = this;
+    PHOTON.threeChildren[name] = this;
 
     // Geometry object for Three.js mesh
     // all g objects contain property 'type'
@@ -2643,17 +2643,17 @@ var QUANTUM = {
         material = new THREE.MeshPhongMaterial(m.inputs);
         break;
       case 'mirror':
-        mirror = new THREE.Mirror(QUANTUM.renderer, QUANTUM.camera, {
+        mirror = new THREE.Mirror(PHOTON.renderer, PHOTON.camera, {
           color: m.color
         });
-        QUANTUM.threeMirrors.push(mirror);
+        PHOTON.threeMirrors.push(mirror);
         material = mirror.material;
         break;
     }
 
     // Instantiating Three.js mesh object
     var mesh = new THREE.Mesh(geometry, material);
-    QUANTUM.scene.add(mesh);
+    PHOTON.scene.add(mesh);
     if(mirror) mesh.add(mirror);
     this.mesh = mesh;
 
@@ -2721,7 +2721,7 @@ var QUANTUM = {
       t_vector.set(deltaS[0], deltaS[1], deltaS[2]);
 
       // Animator object has application render an animation
-      QUANTUM.animator.to(this, {t_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {t_progress: 1}, time, function() {
         t_progress = 0;
         dS.set(0, 0, 0);
         if(callback !== undefined) callback();
@@ -2762,7 +2762,7 @@ var QUANTUM = {
       r_axis.set( axis[0], axis[1], axis[2] );
 
       // Animator object has application render the animation
-      QUANTUM.animator.to(this, {r_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {r_progress: 1}, time, function() {
         r_progress = 0;
         thetaStep = null;
         if(callback !== undefined) callback();
@@ -2810,7 +2810,7 @@ var QUANTUM = {
     // - a callback function
     this.animateAlongPath = function(time, pathFn, callback) {
       path = pathFn;
-      QUANTUM.animator.to(this, {p_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {p_progress: 1}, time, function() {
         p_progress = 0;
         currentPosition = null;
         prevPosition = null;
@@ -2822,16 +2822,16 @@ var QUANTUM = {
 
     // Get the position of the 3D mesh in the div containing the scene
     this.getWindowPosition = function() {
-      QUANTUM.scene.updateMatrixWorld(true);
+      PHOTON.scene.updateMatrixWorld(true);
 
       // Getting dimensions of the scene
-      var w = QUANTUM.children['SceneBox'].w
-      ,   h = QUANTUM.children['SceneBox'].h
+      var w = PHOTON.children['SceneBox'].w
+      ,   h = PHOTON.children['SceneBox'].h
       // vector object used for getting the window coordinates
       ,   vec3 = new THREE.Vector3();
 
       // Retrieiving window coordinates
-      vec3.setFromMatrixPosition(mesh.matrixWorld).project(QUANTUM.camera);
+      vec3.setFromMatrixPosition(mesh.matrixWorld).project(PHOTON.camera);
       vec3.x = w/2 + Math.round(w/2 * vec3.x);
       vec3.y = h/2 - Math.round(h/2 * vec3.y);
       // Returns the 3-vector object
@@ -2849,29 +2849,29 @@ var QUANTUM = {
       this.labelInfo = [content, dx, dy];
 
       var p = this.getWindowPosition()
-      ,   s = QUANTUM._SCALE_FACTOR
-      ,   size = QUANTUM._REDUCE_LABEL_SIZE? 20 : 28;
+      ,   s = PHOTON._SCALE_FACTOR
+      ,   size = PHOTON._REDUCE_LABEL_SIZE? 20 : 28;
 
       // Label
-      this.label = new QUANTUM.TextBox(name+'-label', p.x+dx, p.y+dy, size, [255, 255, 255]);
+      this.label = new PHOTON.TextBox(name+'-label', p.x+dx, p.y+dy, size, [255, 255, 255]);
       this.label.setContent(content);
       this.label.addTextShadow();
       this.label.center(200);
 
-      QUANTUM.instance.add(this.label);
+      PHOTON.instance.add(this.label);
     }
 
     // Remove label
 		this.removeLabel = function() {
 			if(this.label) {
-				QUANTUM.removeChild(this.label);
+				PHOTON.removeChild(this.label);
 				delete this.label;
 			}
 		}
 
     // Update label position when scene changes
     this.updateLabel = function() {
-      if(QUANTUM._UPDATE_LABELS) {
+      if(PHOTON._UPDATE_LABELS) {
         this.removeLabel();
 
         var l = this.labelInfo;
@@ -2882,8 +2882,8 @@ var QUANTUM = {
     // Remove ThreeChild from the scene
     this.remove = function() {
       if(this.label) this.removeLabel();
-      QUANTUM.scene.remove(mesh);
-      delete QUANTUM.threeChildren[name];
+      PHOTON.scene.remove(mesh);
+      delete PHOTON.threeChildren[name];
     }
   },
   // End of ThreeChild class constructor
@@ -2956,7 +2956,7 @@ var QUANTUM = {
         // Current frame in the animation
         currentFrame: 0,
         // Frame count of the animation
-        frameCount: QUANTUM._DEVELOPER_MODE? 1 : 60 * time,
+        frameCount: PHOTON._DEVELOPER_MODE? 1 : 60 * time,
         // Object the animation changes the state of
         object: mainObject,
         // Object property it linearly interpolates
@@ -2987,7 +2987,7 @@ var QUANTUM = {
     //-- Render loop --//
 
     var self = this
-    ,   fps = QUANTUM._ANIMATION_FRAMERATE
+    ,   fps = PHOTON._ANIMATION_FRAMERATE
     ,   now
     ,   then = Date.now()
     ,   interval = 1000/fps
@@ -3031,20 +3031,20 @@ var QUANTUM = {
         });
 
         // Updating labels of 3D objects for animations
-        for(key in QUANTUM.threeChildren) {
-          if(QUANTUM.threeChildren[key].label && animations.length)
-            QUANTUM.threeChildren[key].updateLabel();
+        for(key in PHOTON.threeChildren) {
+          if(PHOTON.threeChildren[key].label && animations.length)
+            PHOTON.threeChildren[key].updateLabel();
         }
 
         // Rendering mirror textures
-        for(i in QUANTUM.threeMirrors) {
-  				QUANTUM.threeMirrors[i].updateTextureMatrix();
-  				QUANTUM.threeMirrors[i].render();
+        for(i in PHOTON.threeMirrors) {
+  				PHOTON.threeMirrors[i].updateTextureMatrix();
+  				PHOTON.threeMirrors[i].render();
   			}
 
         // Render the 3D scene, if there is one
-        if(QUANTUM.renderer !== null)
-          QUANTUM.renderer.render(QUANTUM.scene, QUANTUM.camera);
+        if(PHOTON.renderer !== null)
+          PHOTON.renderer.render(PHOTON.scene, PHOTON.camera);
       }
 
       // Repaints the screen and calls the render function again as a callback
@@ -3057,11 +3057,11 @@ var QUANTUM = {
   // General Button object constructor
   Button: function(name, x, y, w, h) {
     // All buttons are instances of the Child object
-    QUANTUM.Child.call(this, name, x, y, w, h);
+    PHOTON.Child.call(this, name, x, y, w, h);
 
     // Adding overlay which will have an inner shadow when the button gets
     // pressed to give illusion of depth
-    var overlay = new QUANTUM.Child('next-button-overlay', 0, 0, w, h);
+    var overlay = new PHOTON.Child('next-button-overlay', 0, 0, w, h);
     overlay.$.css('z-index', 2);
     this.overlay = overlay;
  		this.addChild(overlay);
@@ -3076,7 +3076,7 @@ var QUANTUM = {
         // Callback executes
         callback();
         // Add inset shadow for 0.4 seconds
-        var s = QUANTUM._SCALE_FACTOR;
+        var s = PHOTON._SCALE_FACTOR;
         overlay.$.css({
           'box-shadow': 'inset '+ (5*s) +'px '+ (5*s) +'px '+ (8*s) +'px rgba(0,0,0,0.4)'
         });
@@ -3085,12 +3085,12 @@ var QUANTUM = {
         }, 400);
       }
       // Add Hammer tap event listener to button
-      QUANTUM.addTapEvent({source: this, node: overlay.div}, event);
+      PHOTON.addTapEvent({source: this, node: overlay.div}, event);
     }
 
     // Remove the button's event listener
     this.offPress = function() {
-      QUANTUM.removeEvent(overlay.div);
+      PHOTON.removeEvent(overlay.div);
     }
 
     // Methods for button style
@@ -3111,9 +3111,9 @@ var QUANTUM = {
 
       // Instantiating a TextBox object inside the button
       var c = []
-      ,   s = QUANTUM._SCALE_FACTOR;
+      ,   s = PHOTON._SCALE_FACTOR;
       for(i in this.color) c.push(this.color[i]-80);
-      this.text = new QUANTUM.TextBox(name+'-text', 0, (h-size)/3, size, c);
+      this.text = new PHOTON.TextBox(name+'-text', 0, (h-size)/3, size, c);
       this.addChild(this.text);
       this.text.center(w);
       this.text.setContent(content);
@@ -3137,12 +3137,12 @@ var QUANTUM = {
   // This object creates a button that can refresh the exercise
   ButtonRefresh: function() {
     // Calls an instance of the button object
-    QUANTUM.Button.call(this, 'bt-refresh', QUANTUM.instance.w-55, 10, 40, 40);
+    PHOTON.Button.call(this, 'bt-refresh', PHOTON.instance.w-55, 10, 40, 40);
     this.setColor(255, 100, 100);
     this.addRaphaelPaper();
 
     // Top refresh graphic
-    var topGraphic = new QUANTUM.RaphaelChild('top-refresh-graphic', this, {
+    var topGraphic = new PHOTON.RaphaelChild('top-refresh-graphic', this, {
       type: 'path',
       color: 'none',
       width: 0,
@@ -3164,7 +3164,7 @@ var QUANTUM = {
     }
 
     // Bottom refresh graphic
-    var bottomGraphic = new QUANTUM.RaphaelChild('bottom-refresh-graphic', this, {
+    var bottomGraphic = new PHOTON.RaphaelChild('bottom-refresh-graphic', this, {
       type: 'path',
       color: 'none',
       width: 0,
@@ -3187,28 +3187,28 @@ var QUANTUM = {
     // Adding the refresh functionality
     function renderRefreshWindow() {
       // Reference to the refresh button itself
-      var self = QUANTUM.children['bt-refresh']
+      var self = PHOTON.children['bt-refresh']
       // Reference to the instance of the application
-      ,   app = QUANTUM.instance;
+      ,   app = PHOTON.instance;
 
       // So that you cannot make two refresh window layers
       self.offPress();
 
       // Creates an overlay over the application
-      var overlay = new QUANTUM.Child('refresh-overlay', 0, 0, app.w, app.h);
+      var overlay = new PHOTON.Child('refresh-overlay', 0, 0, app.w, app.h);
       overlay.div.style.background = 'rgba(0, 0, 0, 0.7)';
       app.add(overlay, true);
 
       // Creates a window which prompts users on whether or not they want to
       // restart the application
-      var refreshWindow = new QUANTUM.Child('refresh-window', app.w/2-200, app.h/2-100, 400, 200);
+      var refreshWindow = new PHOTON.Child('refresh-window', app.w/2-200, app.h/2-100, 400, 200);
       refreshWindow.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
       refreshWindow.addStroke(100, 100, 100);
       refreshWindow.addShadow();
       overlay.addChild(refreshWindow);
 
       // The text box prompts the users on whether they want to restart the exercise
-      var prompt = new QUANTUM.TextBox('refresh-prompt', 25, 30, 24, [80, 80, 80]);
+      var prompt = new PHOTON.TextBox('refresh-prompt', 25, 30, 24, [80, 80, 80]);
       prompt.center(350);
       prompt.setContent('Are you sure you want to restart the exercise from the beginning?');
       refreshWindow.addChild(prompt);
@@ -3216,13 +3216,13 @@ var QUANTUM = {
       // Users can click on either a Yes or No button to make a decision
 
       // Yes button
-      var btYes = new QUANTUM.Button('bt-yes', 80, 120, 100, 60);
+      var btYes = new PHOTON.Button('bt-yes', 80, 120, 100, 60);
       btYes.setColor(50, 220, 150);
       btYes.addTextContent(30, 'YES');
       refreshWindow.addChild(btYes);
 
       // No button
-      var btNo = new QUANTUM.Button('bt-yes', 220, 120, 100, 60);
+      var btNo = new PHOTON.Button('bt-yes', 220, 120, 100, 60);
       btNo.setColor(220, 130, 100);
       btNo.addTextContent(30, 'NO');
       refreshWindow.addChild(btNo);
@@ -3234,10 +3234,10 @@ var QUANTUM = {
         btNo.offPress();
         overlay.hide(true);
         setTimeout(function() {
-          QUANTUM.removeChild(btYes);
-          QUANTUM.removeChild(btNo);
-          QUANTUM.removeChild(refreshWindow);
-          QUANTUM.removeChild(overlay);
+          PHOTON.removeChild(btYes);
+          PHOTON.removeChild(btNo);
+          PHOTON.removeChild(refreshWindow);
+          PHOTON.removeChild(overlay);
         }, 600);
         self.onPress(renderRefreshWindow);
       });
@@ -3248,28 +3248,28 @@ var QUANTUM = {
         // Remove the overlay
         overlay.hide(true);
         // Remove all objects from the 3D scene
-        for(key in QUANTUM.threeChildren) QUANTUM.threeChildren[key].remove();
+        for(key in PHOTON.threeChildren) PHOTON.threeChildren[key].remove();
         // Hide all of the app's children
-        for(key in QUANTUM.children)
+        for(key in PHOTON.children)
           switch(key) {
             case 'app': break;
             default:
-            if(QUANTUM.children[key].hide !== undefined)
-              QUANTUM.children[key].hide(true);
+            if(PHOTON.children[key].hide !== undefined)
+              PHOTON.children[key].hide(true);
               break;
           }
         // Remove all of the app's children
         setTimeout(function() {
-          for(key in QUANTUM.children)
+          for(key in PHOTON.children)
             switch(key) {
               case 'app': break;
               default:
-                QUANTUM.removeChild(QUANTUM.children[key]);
+                PHOTON.removeChild(PHOTON.children[key]);
                 break;
             }
         }, 500);
         setTimeout(function() {
-          QUANTUM.renderIntro();
+          PHOTON.renderIntro();
         }, 600)
       })
     }
@@ -3281,12 +3281,12 @@ var QUANTUM = {
   // Class constructor for a button that opens the exercise in a new tab
   ButtonWindow: function() {
     // This object is an instance of the Button class
-    QUANTUM.Button.call(this, 'bt-window', QUANTUM.instance.w-115, 10, 40, 40);
+    PHOTON.Button.call(this, 'bt-window', PHOTON.instance.w-115, 10, 40, 40);
     this.setColor(0, 200, 255);
     this.addRaphaelPaper();
 
     // Front window graphic
-    var frontGraphic = new QUANTUM.RaphaelChild('front-window-graphic', this, {
+    var frontGraphic = new PHOTON.RaphaelChild('front-window-graphic', this, {
       type: 'path',
       width: 3,
       color: '#369',
@@ -3303,7 +3303,7 @@ var QUANTUM = {
     }
 
     // Back window graphic
-    var backGraphic = new QUANTUM.RaphaelChild('back-window-graphic', this, {
+    var backGraphic = new PHOTON.RaphaelChild('back-window-graphic', this, {
       type: 'path',
       width: 3,
       color: '#369',
@@ -3332,7 +3332,7 @@ var QUANTUM = {
   // - width (w) and height(h) of the button
   ButtonNext: function(x, y, w, h) {
     // This is an instance of the Button class
-    QUANTUM.Button.call(this, 'bt-next', x, y, w, h);
+    PHOTON.Button.call(this, 'bt-next', x, y, w, h);
     this.setColor(100, 130, 222);
     this.addTextContent(h-15, 'NEXT');
   },
@@ -3342,7 +3342,7 @@ var QUANTUM = {
   // inputs are the same as the ButtonNext constructor
   ButtonBack: function(x, y, w, h) {
     // This is an instance of the Button class
-    QUANTUM.Button.call(this, 'bt-back', x, y, w, h);
+    PHOTON.Button.call(this, 'bt-back', x, y, w, h);
     this.setColor(170, 122, 230);
     this.addTextContent(h-15, 'BACK');
   },
@@ -3352,12 +3352,12 @@ var QUANTUM = {
   // inputs are the same as the two classes above
   ButtonPlay: function(x, y, w, h) {
     // This is an instance of the Button class
-    QUANTUM.Button.call(this, 'bt-play', x, y, w, h);
+    PHOTON.Button.call(this, 'bt-play', x, y, w, h);
     this.addRaphaelPaper();
     this.setColor(90, 220, 90);
 
     // Play graphic
-    var playGraphic = new QUANTUM.RaphaelChild('play-graphic', this, {
+    var playGraphic = new PHOTON.RaphaelChild('play-graphic', this, {
       type: 'path',
       color: 'none',
       width: 0,
@@ -3378,21 +3378,21 @@ var QUANTUM = {
   // inputs are the same as the button classes above
   ButtonHelp: function(x, y, w, h) {
     // This is an instance of the Button class
-    QUANTUM.Button.call(this, 'bt-help', x, y, w, h);
+    PHOTON.Button.call(this, 'bt-help', x, y, w, h);
     this.setColor(100, 220, 255);
     this.addTextContent(h-15, '?');
 
     // Pressing this button renders the help layer
-    this.onPress(QUANTUM.renderHelpLayer);
+    this.onPress(PHOTON.renderHelpLayer);
   },
 
   // This function is called when the help button is pressed
   renderHelpLayer: function() {
-    QUANTUM.children['bt-help'].offPress();
-    if(QUANTUM.children['bt-help'].blinkHold) QUANTUM.children['bt-help'].blinkOff();
+    PHOTON.children['bt-help'].offPress();
+    if(PHOTON.children['bt-help'].blinkHold) PHOTON.children['bt-help'].blinkOff();
 
     // Instantiate help layer
-    var helpLayer = new QUANTUM.HelpLayer();
+    var helpLayer = new PHOTON.HelpLayer();
   },
 
   // PolarizerSwitch class constructor
@@ -3402,7 +3402,7 @@ var QUANTUM = {
   // - x, y, coordinates of the upper left corner of the bounding box
   PolarizerSwitch: function(index) {
     // This is an instance of the Button class
-    QUANTUM.Button.call(this, 'bt-switch-'+index, 475+120*index, 100, 60, 60);
+    PHOTON.Button.call(this, 'bt-switch-'+index, 475+120*index, 100, 60, 60);
     this.setColor(110, 190, 110);
     this.addRaphaelPaper();
     // Border radius so that the button appears circular
@@ -3410,7 +3410,7 @@ var QUANTUM = {
     this.overlay.div.style.borderRadius = '50%';
 
     // Plus graphic
-    var vertical = new QUANTUM.RaphaelChild('bt-switch-'+index+'-vertical', this, {
+    var vertical = new PHOTON.RaphaelChild('bt-switch-'+index+'-vertical', this, {
       type: 'path',
       color: '#474',
       width: 8,
@@ -3418,7 +3418,7 @@ var QUANTUM = {
     });
     vertical.addPoint(30, 50);
     vertical.addInnerBevel();
-    var horizontal = new QUANTUM.RaphaelChild('bt-switch-'+index+'-horizontal', this, {
+    var horizontal = new PHOTON.RaphaelChild('bt-switch-'+index+'-horizontal', this, {
       type: 'path',
       color: '#474',
       width: 8,
@@ -3454,40 +3454,40 @@ var QUANTUM = {
 
       // Moving the polarizer in or out of view
       var x = polarizerInView? 1 : -1;
-      QUANTUM.polarizers[index + 1].inView = !QUANTUM.polarizers[index + 1].inView;
-      QUANTUM.polarizers[index + 1].removeLabel();
+      PHOTON.polarizers[index + 1].inView = !PHOTON.polarizers[index + 1].inView;
+      PHOTON.polarizers[index + 1].removeLabel();
       // Animation
-      QUANTUM.polarizers[index + 1].move(1, [0, x * 300, 0], function() {
-        QUANTUM.polarizers[index + 1].inView = !polarizerInView;
-        QUANTUM.polarizers[index + 1].orientToAngle(0);
-        x === 1? QUANTUM.polarizers[index + 1].removeInput() : QUANTUM.polarizers[index + 1].addInput();
+      PHOTON.polarizers[index + 1].move(1, [0, x * 300, 0], function() {
+        PHOTON.polarizers[index + 1].inView = !polarizerInView;
+        PHOTON.polarizers[index + 1].orientToAngle(0);
+        x === 1? PHOTON.polarizers[index + 1].removeInput() : PHOTON.polarizers[index + 1].addInput();
       });
 
       // Changing the length of the light path if it's necessary
       setTimeout(function() {
-        var polarizersInView = QUANTUM.polarizers.filter(function(current) {
+        var polarizersInView = PHOTON.polarizers.filter(function(current) {
           return current.inView;
         })
         ,   probability = 1;
         if(polarizersInView.length === 1) {
-          QUANTUM.children['Screen3D'].illuminate(1);
-          QUANTUM.lightPaths[0].changeLength(600 - QUANTUM.lightPaths[0].length);
+          PHOTON.children['Screen3D'].illuminate(1);
+          PHOTON.lightPaths[0].changeLength(600 - PHOTON.lightPaths[0].length);
         }
         for(var i = 1; i < polarizersInView.length; i++) {
           // Changing the probability displayed on the screen
           probability *= Math.pow(Math.cos(polarizersInView[i].theta - polarizersInView[i-1].theta), 2);
           if(i === polarizersInView.length - 1)
-            QUANTUM.children['Screen3D'].illuminate(probability);
+            PHOTON.children['Screen3D'].illuminate(probability);
 
           if(Math.abs(polarizersInView[i].theta - polarizersInView[i-1].theta) === Math.PI/2) {
-            var index = QUANTUM.polarizers.indexOf(polarizersInView[i])
+            var index = PHOTON.polarizers.indexOf(polarizersInView[i])
             ,   length = 150 + 100 * index;
-            QUANTUM.lightPaths[0].changeLength(length - QUANTUM.lightPaths[0].length);
+            PHOTON.lightPaths[0].changeLength(length - PHOTON.lightPaths[0].length);
             break;
           }
           else if(i === polarizersInView.length - 1) {
             var length = 600;
-            QUANTUM.lightPaths[0].changeLength(length - QUANTUM.lightPaths[0].length);
+            PHOTON.lightPaths[0].changeLength(length - PHOTON.lightPaths[0].length);
           }
         }
       }, polarizerInView? 10 : 1200);
@@ -3548,7 +3548,7 @@ var QUANTUM = {
   //   makes it longer (false)
   ButtonLengthChange: function(name, shorten) { // 290, 160, 100, 40
     // This object is an instance of the Button class
-    QUANTUM.Button.call(this, name, 305, shorten? 295 : 355, 120, 40);
+    PHOTON.Button.call(this, name, 305, shorten? 295 : 355, 120, 40);
     this.setColor(100, 120, 250);
     this.$.css('z-index', 2);
     this.addRaphaelPaper();
@@ -3556,7 +3556,7 @@ var QUANTUM = {
     // Arrow graphics
 
     // Arrow facing right
-    var right = new QUANTUM.Arrow(name+'-right', this, {
+    var right = new PHOTON.Arrow(name+'-right', this, {
       length: 40, width: 10,
       headWidth: 25, headLength: 15,
       x: shorten? 10 : 70, y: 20,
@@ -3566,7 +3566,7 @@ var QUANTUM = {
     right.addInnerBevel();
 
     // Arrow facing left
-    var left = new QUANTUM.Arrow(name+'-left', this, {
+    var left = new PHOTON.Arrow(name+'-left', this, {
       length: 40, width: 10,
       headWidth: 25, headLength: 15,
       x: shorten? 110 : 50, y: 20,
@@ -3574,21 +3574,21 @@ var QUANTUM = {
     });
     left.rotate(270);
     left.addInnerBevel();
-    left.bevel.translate(-2*QUANTUM._SCALE_FACTOR, -QUANTUM._SCALE_FACTOR);
+    left.bevel.translate(-2*PHOTON._SCALE_FACTOR, -PHOTON._SCALE_FACTOR);
   },
 
   // ButtonShort class constructor
   // this class creates a button that shortens the length of the glass
   ButtonShort: function() {
     // This object is an instance of the ButtonLengthChange class above
-    QUANTUM.ButtonLengthChange.call(this, 'bt-short', true);
+    PHOTON.ButtonLengthChange.call(this, 'bt-short', true);
   },
 
   // ButtonLong class constructor
   // this class creates a button that increases the length of the glass
   ButtonLong: function() {
     // This object is an instance of the ButtonLengthChange class above
-    QUANTUM.ButtonLengthChange.call(this, 'bt-long', false);
+    PHOTON.ButtonLengthChange.call(this, 'bt-long', false);
   },
 
   //== MESSAGE BOX ==//
@@ -3600,13 +3600,13 @@ var QUANTUM = {
   // - optional options object
   MessageBox: function(x, y, w, h, options) {
     // This object is an instance of a Child object
-    QUANTUM.Child.call(this, 'msg-box', x, y, w, h);
+    PHOTON.Child.call(this, 'msg-box', x, y, w, h);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.addShadow();
 
     // Text resides in this Child object
-    var contentBox = new QUANTUM.Child('msg-content-box', 14, 15, w-30, h-30);
+    var contentBox = new PHOTON.Child('msg-content-box', 14, 15, w-30, h-30);
     contentBox.fillWithGradient('90deg', [240, 240, 210], [255, 255, 230]);
     contentBox.addStroke(150, 140, 100);
     this.addChild(contentBox);
@@ -3627,8 +3627,8 @@ var QUANTUM = {
           options['font-size'] : 24
     ,   h_margin = options !== undefined && options.hasOwnProperty('horizontal-margin')?
           options['horizontal-margin'] : 10
-    ,   content = new QUANTUM.TextBox('msg-content', h_margin, 5, size, 'black')
-    ,   s = QUANTUM._SCALE_FACTOR;
+    ,   content = new PHOTON.TextBox('msg-content', h_margin, 5, size, 'black')
+    ,   s = PHOTON._SCALE_FACTOR;
     content.$.css({
       'width': ((w - (30 + 2 * h_margin)) * s) + 'px',
       'height': ((h- 40) * s) + 'px',
@@ -3682,8 +3682,8 @@ var QUANTUM = {
   // - coordiantes of the endpoints in the XZ plane
   LightPath3D: function(x1, z1, x2, z2) {
     // Storing the light path in publicly accesible memory
-    var i = QUANTUM.lightPaths.length;
-    QUANTUM.lightPaths.push(this);
+    var i = PHOTON.lightPaths.length;
+    PHOTON.lightPaths.push(this);
 
     // Making endpoints publicly accessible
     this.x1 = x1; this.z1 = z1;
@@ -3704,7 +3704,7 @@ var QUANTUM = {
     }
 
     // Light path graphic
-    var path = new QUANTUM.ThreeChild(
+    var path = new PHOTON.ThreeChild(
       'light-path-'+i,
       { // Geometry
         type: 'cylinder',
@@ -3763,7 +3763,7 @@ var QUANTUM = {
     // - callback function that executes when the animation ends (optional)
     this.animateLengthChange = function(time, dL, callback) {
       totalLength = dL;
-      QUANTUM.animator.to(this, {progress: 1}, time, function() {
+      PHOTON.animator.to(this, {progress: 1}, time, function() {
         progress = 0;
         lastChange = 0;
         if(callback !== undefined) callback();
@@ -3791,7 +3791,7 @@ var QUANTUM = {
     }
 
     // Rendering the sphere
-    var particle = new QUANTUM.ThreeChild(
+    var particle = new PHOTON.ThreeChild(
       'photon-particle',
       { // Geometry
         type:'sphere',
@@ -3821,7 +3821,7 @@ var QUANTUM = {
         ,   r = randomState? 20 : 1.5
         ,   h = randomState? 1 : 40;
 
-        polarGraphic = new QUANTUM.ThreeChild(
+        polarGraphic = new PHOTON.ThreeChild(
           'photon-polarization',
           { // Geometry
             type: 'cylinder',
@@ -3854,8 +3854,8 @@ var QUANTUM = {
     // input is angle of polarization (rad) or the string 'random'
     this.polarize = function(theta) {
       // Updates polarization indicator window if there is one
-      if(QUANTUM.children['polarization-indicator'] && this.polarizeIndicator)
-        QUANTUM.children['polarization-indicator'].polarize(
+      if(PHOTON.children['polarization-indicator'] && this.polarizeIndicator)
+        PHOTON.children['polarization-indicator'].polarize(
           theta === 'random'? theta : Math.round(1800 * theta / Math.PI) / 10
         );
 
@@ -3908,8 +3908,8 @@ var QUANTUM = {
         polarization += r_progress * (finalPolarization - initialPolarization);
         this.polarization = polarization;
 
-        if(QUANTUM.children['polarization-indicator'] && this.polarizeIndicator)
-          QUANTUM.children['polarization-indicator'].polarize(
+        if(PHOTON.children['polarization-indicator'] && this.polarizeIndicator)
+          PHOTON.children['polarization-indicator'].polarize(
             Math.round(1800 * polarization / Math.PI) / 10
           );
       },
@@ -3930,7 +3930,7 @@ var QUANTUM = {
       // Rotating polar graphic
       polarGraphic.animateRotation(time, dTheta, [poynting.x, 0, poynting.z]);
       // Updating the numeric representation of the polarization
-      QUANTUM.animator.to(this, {r_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {r_progress: 1}, time, function() {
         r_progress = 0;
         finalPolarization = initialPolarization + dTheta;
       })
@@ -3955,13 +3955,13 @@ var QUANTUM = {
         emissive: 0x222222,
  				shininess: 10,
  				metal: true,
-        specularMap: QUANTUM._TEXTURE_SUPPORT?
-          THREE.ImageUtils.loadTexture(QUANTUM._REMOTE_ASSETS['METAL TEXTURE']) : null
+        specularMap: PHOTON._TEXTURE_SUPPORT?
+          THREE.ImageUtils.loadTexture(PHOTON._REMOTE_ASSETS['METAL TEXTURE']) : null
  			}
  		}
 
     // Main shell
-    var shell = new QUANTUM.ThreeChild(
+    var shell = new PHOTON.ThreeChild(
       'photon-source-shell',
       {
         type: 'cylinder',
@@ -3979,8 +3979,8 @@ var QUANTUM = {
       radius: 35,
       height: 10
     }
-    ,   shell1 = new QUANTUM.ThreeChild('photon-source-shell1', outerShellGeometry, metalMatObj)
-    ,   shell2 = new QUANTUM.ThreeChild('photon-source-shell2', outerShellGeometry, metalMatObj);
+    ,   shell1 = new PHOTON.ThreeChild('photon-source-shell1', outerShellGeometry, metalMatObj)
+    ,   shell2 = new PHOTON.ThreeChild('photon-source-shell2', outerShellGeometry, metalMatObj);
     shell1.rotate(Math.PI/2, 0, 0, 1);
     shell1.translate(25, 0, 0);
     meshes.push(shell1);
@@ -3995,8 +3995,8 @@ var QUANTUM = {
       radius2: 0,
       height: 20
     }
-    ,   bevel1 = new QUANTUM.ThreeChild('photon-source-bevel1', bevelGeometry, metalMatObj)
-    ,   bevel2 = new QUANTUM.ThreeChild('photon-source-bevel2', bevelGeometry, metalMatObj);
+    ,   bevel1 = new PHOTON.ThreeChild('photon-source-bevel1', bevelGeometry, metalMatObj)
+    ,   bevel2 = new PHOTON.ThreeChild('photon-source-bevel2', bevelGeometry, metalMatObj);
     bevel1.rotate(-Math.PI/2, 0, 0, 1);
     bevel1.translate(10, 0, 0);
     meshes.push(bevel1);
@@ -4005,7 +4005,7 @@ var QUANTUM = {
     meshes.push(bevel2);
 
     // Red lens where photons exit source
-    var lens = new QUANTUM.ThreeChild(
+    var lens = new PHOTON.ThreeChild(
       'photon-source-lens',
       { // Geometry object
         type: 'parametric',
@@ -4140,7 +4140,7 @@ var QUANTUM = {
  			initialAngle = this.theta;
  			targetAngle = angle;
 
- 			QUANTUM.animator.to(this, {rotationProgress: 1}, time, function() {
+ 			PHOTON.animator.to(this, {rotationProgress: 1}, time, function() {
         this.theta %= (2 * Math.PI);
         rotationProgress = 0;
         if(callback !== undefined) callback();
@@ -4165,7 +4165,7 @@ var QUANTUM = {
     // Blink animation
     this.blink = function() {
       // Add light
-      QUANTUM.children['SceneBox'].addPointLight({
+      PHOTON.children['SceneBox'].addPointLight({
         position: new THREE.Vector3(50 + t.x, t.y, t.z),
         color: 0xff0000,
         decay: 200,
@@ -4173,7 +4173,7 @@ var QUANTUM = {
       });
       // Remove light half a second later
       setTimeout(function() {
-        QUANTUM.children['SceneBox'].removePointLight('photon-source-light');
+        PHOTON.children['SceneBox'].removePointLight('photon-source-light');
       }, 500);
     }
   }, // End of PhotonSource3D class constructor
@@ -4182,8 +4182,8 @@ var QUANTUM = {
   // this object renders a 3D polarizer in a WebGL scene
   Polarizer: function() {
     // Adding this polarizer to a vector defined earlier
-    var index = QUANTUM.polarizers.length;
-    QUANTUM.polarizers.push(this);
+    var index = PHOTON.polarizers.length;
+    PHOTON.polarizers.push(this);
 
     // Creating 3D objects that make up the polarizer
 
@@ -4200,13 +4200,13 @@ var QUANTUM = {
  				shininess: 10,
  				metal: true,
         side: THREE.DoubleSide,
-        specularMap: QUANTUM._TEXTURE_SUPPORT?
-          THREE.ImageUtils.loadTexture(QUANTUM._REMOTE_ASSETS['METAL TEXTURE']) : null
+        specularMap: PHOTON._TEXTURE_SUPPORT?
+          THREE.ImageUtils.loadTexture(PHOTON._REMOTE_ASSETS['METAL TEXTURE']) : null
  			}
  		}
 
     // Outer edge of the metallic cylinder containing the polarizing material
-    var outerEdge = new QUANTUM.ThreeChild('polarizer-edge-'+index, {
+    var outerEdge = new PHOTON.ThreeChild('polarizer-edge-'+index, {
         //Geometry object
         type: 'parametric',
         surface: function(s, t) {
@@ -4227,8 +4227,8 @@ var QUANTUM = {
       innerRadius: 45,
       outerRadius: 50
     }
-    ,   ring1 = new QUANTUM.ThreeChild('polarizer-ring1-'+index, ringGeometryObj, metalMatObj)
-    ,   ring2 = new QUANTUM.ThreeChild('polarizer-ring2-'+index, ringGeometryObj, metalMatObj)
+    ,   ring1 = new PHOTON.ThreeChild('polarizer-ring1-'+index, ringGeometryObj, metalMatObj)
+    ,   ring2 = new PHOTON.ThreeChild('polarizer-ring2-'+index, ringGeometryObj, metalMatObj)
     ring1.rotate(Math.PI/2, 0, 1, 0);
     ring1.translate(6, 0, 0);
     meshes.push(ring1);
@@ -4247,8 +4247,8 @@ var QUANTUM = {
         );
       }
     }
-    ,   bevel1 = new QUANTUM.ThreeChild('polarizer-bevel1-'+index, bevelGeometryObj, metalMatObj)
-    ,   bevel2 = new QUANTUM.ThreeChild('polarizer-bevel1-'+index, bevelGeometryObj, metalMatObj);
+    ,   bevel1 = new PHOTON.ThreeChild('polarizer-bevel1-'+index, bevelGeometryObj, metalMatObj)
+    ,   bevel2 = new PHOTON.ThreeChild('polarizer-bevel1-'+index, bevelGeometryObj, metalMatObj);
     bevel1.translate(1, 0, 0);
     meshes.push(bevel1);
     bevel2.rotate(Math.PI, 0, 1, 0);
@@ -4260,7 +4260,7 @@ var QUANTUM = {
       type: 'circle',
       radius: 50
     }
-    ,   lensMaterialObj = QUANTUM._TEXTURE_SUPPORT?
+    ,   lensMaterialObj = PHOTON._TEXTURE_SUPPORT?
       {
         type: 'mirror',
         color: 0x333333
@@ -4269,8 +4269,8 @@ var QUANTUM = {
         type: 'lambertian',
         inputs: {color: 0x333333}
       }
-    ,   lens1 = new QUANTUM.ThreeChild('polarizer-lens1-'+index, lensGeometryObj, lensMaterialObj)
-    ,   lens2 = new QUANTUM.ThreeChild('polarizer-lens1-'+index, lensGeometryObj, lensMaterialObj);
+    ,   lens1 = new PHOTON.ThreeChild('polarizer-lens1-'+index, lensGeometryObj, lensMaterialObj)
+    ,   lens2 = new PHOTON.ThreeChild('polarizer-lens1-'+index, lensGeometryObj, lensMaterialObj);
     lens1.rotate(Math.PI/2, 0, 1, 0);
     lens1.translate(4, 0, 0);
     meshes.push(lens1);
@@ -4284,8 +4284,8 @@ var QUANTUM = {
       radius: 4,
       height: 20
     }
-    ,   topKnob = new QUANTUM.ThreeChild('polarizer-top-knob-'+index, knobGeometryObj, metalMatObj)
-    ,   bottomKnob = new QUANTUM.ThreeChild('polarizer-bottom-knob-'+index, knobGeometryObj, metalMatObj);
+    ,   topKnob = new PHOTON.ThreeChild('polarizer-top-knob-'+index, knobGeometryObj, metalMatObj)
+    ,   bottomKnob = new PHOTON.ThreeChild('polarizer-bottom-knob-'+index, knobGeometryObj, metalMatObj);
     topKnob.translate(0, 60, 0);
     meshes.push(topKnob);
     bottomKnob.translate(0, -60, 0);
@@ -4454,15 +4454,15 @@ var QUANTUM = {
     this.addInput = function() {
 
       // Instantiating a new child object which contains the actual input div
-      this.input = new QUANTUM.Child('polarizer-'+i+'-input-container', 445 + (index-1) * 125, 395, 100, 80);
+      this.input = new PHOTON.Child('polarizer-'+i+'-input-container', 445 + (index-1) * 125, 395, 100, 80);
       this.input.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
       this.input.addStroke(100, 100, 100);
       this.input.addShadow();
       this.input.$.css('z-index', 2);
-      QUANTUM.instance.add(this.input, true);
+      PHOTON.instance.add(this.input, true);
 
       // Creating HTML input element inside the container
-      var s = QUANTUM._SCALE_FACTOR
+      var s = PHOTON._SCALE_FACTOR
       ,   self = this
       ,   input = document.createElement('input');
 
@@ -4487,7 +4487,7 @@ var QUANTUM = {
             isNaN(value)? self.orientToAngle(0) : self.orientToAngle(Math.PI * value / 180);
 
             // Changing the length of the light path if it's necessary
-            var polarizersInView = QUANTUM.polarizers.filter(function(current) {
+            var polarizersInView = PHOTON.polarizers.filter(function(current) {
               return current.inView;
             })
             ,   probability = 1;
@@ -4495,17 +4495,17 @@ var QUANTUM = {
               // Changing the probability displayed on the screen
               probability *= Math.pow(Math.cos(polarizersInView[i].theta - polarizersInView[i-1].theta), 2);
               if(i === polarizersInView.length - 1)
-                QUANTUM.children['Screen3D'].illuminate(probability);
+                PHOTON.children['Screen3D'].illuminate(probability);
 
               if(Math.abs(polarizersInView[i].theta - polarizersInView[i-1].theta) % (2 * Math.PI) === Math.PI/2) {
-                var index = QUANTUM.polarizers.indexOf(polarizersInView[i])
+                var index = PHOTON.polarizers.indexOf(polarizersInView[i])
                 ,   length = 150 + 100 * index;
-                QUANTUM.lightPaths[0].changeLength(length - QUANTUM.lightPaths[0].length);
+                PHOTON.lightPaths[0].changeLength(length - PHOTON.lightPaths[0].length);
                 break;
               }
               else if(i === polarizersInView.length - 1) {
                 var length = 600;
-                QUANTUM.lightPaths[0].changeLength(length - QUANTUM.lightPaths[0].length);
+                PHOTON.lightPaths[0].changeLength(length - PHOTON.lightPaths[0].length);
               }
             }
           }
@@ -4522,7 +4522,7 @@ var QUANTUM = {
       if(self.input) {
         self.input.hide(true);
         setTimeout(function() {
-          QUANTUM.removeChild(self.input);
+          PHOTON.removeChild(self.input);
           setTimeout(function() { delete self.input; }, 500);
         }, 800);
       }
@@ -4533,8 +4533,8 @@ var QUANTUM = {
   // Mirror3D class constructor
   // this class renders a 3 dimensional, reflective Mirror3D
   Mirror3D: function() {
-    var i = QUANTUM.mirrors.length;
-    QUANTUM.mirrors.push(this);
+    var i = PHOTON.mirrors.length;
+    PHOTON.mirrors.push(this);
 
     // Rendering 3D graphics
 
@@ -4548,7 +4548,7 @@ var QUANTUM = {
     };
 
     // Back wall of the body
-    var back = new QUANTUM.ThreeChild(
+    var back = new PHOTON.ThreeChild(
       'mirror-back-wall-'+i,
       { // Geometry object
         type: 'plane',
@@ -4567,22 +4567,22 @@ var QUANTUM = {
       type: 'plane',
       lx: 100, ly: 10
     }
-    ,   topWall = new QUANTUM.ThreeChild(
+    ,   topWall = new PHOTON.ThreeChild(
       'mirror-top-wall-'+i,
       wallGeometry,
       bodyMaterial
     )
-    ,   bottomWall = new QUANTUM.ThreeChild(
+    ,   bottomWall = new PHOTON.ThreeChild(
       'mirror-bottom-wall-'+i,
       wallGeometry,
       bodyMaterial
     )
-    ,   leftWall = new QUANTUM.ThreeChild(
+    ,   leftWall = new PHOTON.ThreeChild(
       'mirror-left-wall-'+i,
       wallGeometry,
       bodyMaterial
     )
-    ,   rightWall = new QUANTUM.ThreeChild(
+    ,   rightWall = new PHOTON.ThreeChild(
       'mirror-right-wall-'+i,
       wallGeometry,
       bodyMaterial
@@ -4603,7 +4603,7 @@ var QUANTUM = {
     meshes.push(rightWall);
 
     // Mirror
-    var mirror = new QUANTUM.ThreeChild(
+    var mirror = new PHOTON.ThreeChild(
       'mirror-'+i,
       { // Geometry
         type: 'plane',
@@ -4682,8 +4682,8 @@ var QUANTUM = {
   // inputs are:
   Screen3D: function() {
     // Some exercises need 2 screens so this is to avoid overwriting
-    var name = QUANTUM.children['Screen3D'] === undefined? 'Screen3D' : 'Screen3D-2';
-    QUANTUM.children[name] = this;
+    var name = PHOTON.children['Screen3D'] === undefined? 'Screen3D' : 'Screen3D-2';
+    PHOTON.children[name] = this;
 
     // Rendering 3D objects in the scene
 
@@ -4696,7 +4696,7 @@ var QUANTUM = {
       inputs: {color: 0x222222, side: THREE.DoubleSide}
     }
     // Back of the screen
-    ,   back = new QUANTUM.ThreeChild(
+    ,   back = new PHOTON.ThreeChild(
       name,
       { // Geometry object
         type: 'plane',
@@ -4715,22 +4715,22 @@ var QUANTUM = {
       type: 'plane',
       lx: 100, ly: 10
     }
-    ,   topWall = new QUANTUM.ThreeChild(
+    ,   topWall = new PHOTON.ThreeChild(
       name + '-top-wall',
       wallGeometry,
       bodyMaterial
     )
-    ,   bottomWall = new QUANTUM.ThreeChild(
+    ,   bottomWall = new PHOTON.ThreeChild(
       name + '-bottom-wall',
       wallGeometry,
       bodyMaterial
     )
-    ,   leftWall = new QUANTUM.ThreeChild(
+    ,   leftWall = new PHOTON.ThreeChild(
       name + '-left-wall',
       wallGeometry,
       bodyMaterial
     )
-    ,   rightWall = new QUANTUM.ThreeChild(
+    ,   rightWall = new PHOTON.ThreeChild(
       name + '-right-wall',
       wallGeometry,
       bodyMaterial
@@ -4761,7 +4761,7 @@ var QUANTUM = {
     texture.needsUpdate = true;
 
     // Screen lies on this plane
-    var screen = new QUANTUM.ThreeChild(
+    var screen = new PHOTON.ThreeChild(
       name + '-canvas',
       { // Geometry object
         type: 'plane',
@@ -4911,22 +4911,22 @@ var QUANTUM = {
       type: 'plane',
       lx: 60, ly: 60
     }
-    ,   backWall = new QUANTUM.ThreeChild(
+    ,   backWall = new PHOTON.ThreeChild(
       'beam-splitter-back-wall',
       wallGeometry,
       clearMaterial
     )
-    ,   frontWall = new QUANTUM.ThreeChild(
+    ,   frontWall = new PHOTON.ThreeChild(
       'beam-splitter-front-wall',
       wallGeometry,
       blueMaterial
     )
-    ,   leftWall = new QUANTUM.ThreeChild(
+    ,   leftWall = new PHOTON.ThreeChild(
       'beam-splitter-left-wall',
       wallGeometry,
       clearMaterial
     )
-    ,   rightWall = new QUANTUM.ThreeChild(
+    ,   rightWall = new PHOTON.ThreeChild(
       'beam-splitter-right-wall',
       wallGeometry,
       blueMaterial
@@ -4954,22 +4954,22 @@ var QUANTUM = {
         );
       }
     }
-    ,   topBlueTriangle = new QUANTUM.ThreeChild(
+    ,   topBlueTriangle = new PHOTON.ThreeChild(
       'beam-splitter-top-blue-triangle',
       triangleGeometry,
       blueMaterial
     )
-    ,   topClearTriangle = new QUANTUM.ThreeChild(
+    ,   topClearTriangle = new PHOTON.ThreeChild(
       'beam-splitter-top-clear-triangle',
       triangleGeometry,
       clearMaterial
     )
-    ,   bottomBlueTriangle = new QUANTUM.ThreeChild(
+    ,   bottomBlueTriangle = new PHOTON.ThreeChild(
       'beam-splitter-bottom-blue-triangle',
       triangleGeometry,
       blueMaterial
     )
-    ,   bottomClearTriangle = new QUANTUM.ThreeChild(
+    ,   bottomClearTriangle = new PHOTON.ThreeChild(
       'beam-splitter-bottom-clear-triangle',
       triangleGeometry,
       clearMaterial
@@ -5062,7 +5062,7 @@ var QUANTUM = {
  			initialAngle = this.theta;
  			targetAngle = angle;
 
-      QUANTUM.animator.to(this, {r_progress: 1}, time, function() {
+      PHOTON.animator.to(this, {r_progress: 1}, time, function() {
         r_progress = 0;
         self.theta %= (2 * Math.PI);
         if(callback !== undefined) callback();
@@ -5112,7 +5112,7 @@ var QUANTUM = {
     };
 
     // Body of the beam splitter
-    var body = new QUANTUM.ThreeChild(
+    var body = new PHOTON.ThreeChild(
       'polarization-rotator-body',
       { // Geometry
         type: 'cylinder',
@@ -5130,13 +5130,13 @@ var QUANTUM = {
     // Geometry
     var baseGeometry = { type: 'circle', radius: 40 }
     // Left base
-    ,   leftBase = new QUANTUM.ThreeChild(
+    ,   leftBase = new PHOTON.ThreeChild(
       'polarization-rotator-left-base',
       baseGeometry,
       rotatorMaterial
     )
     // Right base
-    ,   rightBase = new QUANTUM.ThreeChild(
+    ,   rightBase = new PHOTON.ThreeChild(
       'polarization-rotator-right-base',
       baseGeometry,
       rotatorMaterial
@@ -5190,19 +5190,19 @@ var QUANTUM = {
   // constructor function defined below
   // inputs are: x, y coordinate of the window
   PolarizationIndicator: function(x, y) {
-    QUANTUM.Child.call(this, 'polarization-indicator', x, y, 200, 200);
+    PHOTON.Child.call(this, 'polarization-indicator', x, y, 200, 200);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.addShadow();
 
     // Label
-    var label = new QUANTUM.TextBox('indicator-label', 0, 5, 20, [100, 100, 100]);
+    var label = new PHOTON.TextBox('indicator-label', 0, 5, 20, [100, 100, 100]);
     label.center(200);
     label.setContent('Photon Polarization');
     this.addChild(label);
 
     // Graphics are rendered in this Child object
-    var contentBox = new QUANTUM.Child('msg-content-box', 20, 30, 160, 160);
+    var contentBox = new PHOTON.Child('msg-content-box', 20, 30, 160, 160);
     contentBox.fillWithGradient('90deg', [240, 240, 210], [255, 255, 230]);
     contentBox.addStroke(150, 140, 100);
     contentBox.addRaphaelPaper();
@@ -5219,14 +5219,14 @@ var QUANTUM = {
     // Background graphics
 
     // Axes that show horizontal and vertical axes
-    var vertical = new QUANTUM.RaphaelChild('indicator-vertical-axis', contentBox, {
+    var vertical = new PHOTON.RaphaelChild('indicator-vertical-axis', contentBox, {
       type: 'path',
       width: 2,
       color: '#ccb',
       x0: 80, y0: 15
     });
     vertical.addPoint(80, 145);
-    var horizontal = new QUANTUM.RaphaelChild('indicator-horizontal-axis', contentBox, {
+    var horizontal = new PHOTON.RaphaelChild('indicator-horizontal-axis', contentBox, {
       type: 'path',
       width: 2,
       color: '#ccb',
@@ -5235,7 +5235,7 @@ var QUANTUM = {
     horizontal.addPoint(145, 80);
 
     // Circle
-    var circle = new QUANTUM.RaphaelChild('indicator-circle', contentBox, {
+    var circle = new PHOTON.RaphaelChild('indicator-circle', contentBox, {
       type: 'ellipse',
       rx: 50, ry: 50,
       cx: 80, cy: 80,
@@ -5245,28 +5245,28 @@ var QUANTUM = {
     circle.graphic.attr('stroke-width', 2);
 
     // Diagonal tick marks on circle
-    var NWSE = new QUANTUM.RaphaelChild('indactor-nwse', contentBox, {
+    var NWSE = new PHOTON.RaphaelChild('indactor-nwse', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#ccb',
       x0: 35, y0: 35
     });
     NWSE.addPoint(55, 55);
-    var NESW = new QUANTUM.RaphaelChild('indactor-nwse', contentBox, {
+    var NESW = new PHOTON.RaphaelChild('indactor-nwse', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#ccb',
       x0: 125, y0: 35
     });
     NESW.addPoint(105, 55);
-    var SENW = new QUANTUM.RaphaelChild('indactor-nwse', contentBox, {
+    var SENW = new PHOTON.RaphaelChild('indactor-nwse', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#ccb',
       x0: 125, y0: 125
     });
     SENW.addPoint(105, 105);
-    var SWNE = new QUANTUM.RaphaelChild('indactor-nwse', contentBox, {
+    var SWNE = new PHOTON.RaphaelChild('indactor-nwse', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#ccb',
@@ -5275,11 +5275,11 @@ var QUANTUM = {
     SWNE.addPoint(55, 105);
 
     // Text indicates polarization
-    var degrees = new QUANTUM.TextBox('indicator-degrees', 110, 135, 20, [150, 140, 100]);
+    var degrees = new PHOTON.TextBox('indicator-degrees', 110, 135, 20, [150, 140, 100]);
     contentBox.addChild(degrees);
 
     // Graphic shows polarization
-    var polarization = new QUANTUM.RaphaelChild('indicator-graphic', contentBox, {
+    var polarization = new PHOTON.RaphaelChild('indicator-graphic', contentBox, {
       type: 'path',
       width: 10,
       color: '#f00',
@@ -5353,7 +5353,7 @@ var QUANTUM = {
 		// Show component polarization bars
 		this.showComponents = function() {
       // Horizontal component
-      var hBar = new QUANTUM.RaphaelChild('indicator-h-bar', contentBox, {
+      var hBar = new PHOTON.RaphaelChild('indicator-h-bar', contentBox, {
         type: 'path',
         width: 10,
         color: '#aa9',
@@ -5363,7 +5363,7 @@ var QUANTUM = {
       hBar.hide();
 
       // Vertical component
-      var vBar = new QUANTUM.RaphaelChild('indicator-v-bar', contentBox, {
+      var vBar = new PHOTON.RaphaelChild('indicator-v-bar', contentBox, {
         type: 'path',
         width: 10,
         color: '#aa9',
@@ -5401,26 +5401,26 @@ var QUANTUM = {
   // - cintent of the label at the top of the window
   // - x, y coordinates of the top left corner
   PhotonCounter: function(labelContent, x, y) {
-    QUANTUM.Child.call(this, 'photon-counter: '+labelContent, x, y, 180, 100);
+    PHOTON.Child.call(this, 'photon-counter: '+labelContent, x, y, 180, 100);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.addShadow();
 
     // Label text box
-    var label = new QUANTUM.TextBox('photon-counter-label: '+labelContent, 0, 5, 18, [90, 90, 90]);
+    var label = new PHOTON.TextBox('photon-counter-label: '+labelContent, 0, 5, 18, [90, 90, 90]);
     label.center(180);
     label.setContent(labelContent);
     this.addChild(label);
 
     // Photon counter screen
-    var screen = new QUANTUM.Child('photon-counter-screen: '+labelContent, 30, 32, 120, 60);
+    var screen = new PHOTON.Child('photon-counter-screen: '+labelContent, 30, 32, 120, 60);
     screen.fillWithGradient('150deg', [15, 15, 15], [65, 65, 65], [15, 15, 15]);
     screen.addStroke(100, 100, 100);
     this.addChild(screen);
 
     // Number graphic
     var count = 0
-    ,   number = new QUANTUM.TextBox('photon-counter-number: '+labelContent, 0, 8, 40, [255, 255, 255]);
+    ,   number = new PHOTON.TextBox('photon-counter-number: '+labelContent, 0, 8, 40, [255, 255, 255]);
     number.center(120);
     number.setContent(count);
     screen.addChild(number);
@@ -5448,19 +5448,19 @@ var QUANTUM = {
   // adding polarization states at the amplitude level
   ProjectionHelper: function() {
     // This is an instance of the Child class
-    QUANTUM.Child.call(this, 'proj-helper', 710, 200, 260, 290);
+    PHOTON.Child.call(this, 'proj-helper', 710, 200, 260, 290);
     this.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     this.addStroke(100, 100, 100);
     this.addShadow();
 
     // Label on top
-    var label = new QUANTUM.TextBox('proj-helper-label', 0, 5, 25, [100, 100, 100]);
+    var label = new PHOTON.TextBox('proj-helper-label', 0, 5, 25, [100, 100, 100]);
     label.center(260);
     label.setContent('Photon Polarization');
     this.addChild(label);
 
     // Content is rendered in this box
-    var contentBox = new QUANTUM.Child('proj-helper-content-box', 10, 40, 240, 240);
+    var contentBox = new PHOTON.Child('proj-helper-content-box', 10, 40, 240, 240);
     contentBox.addRaphaelPaper();
     contentBox.fillWithGradient('90deg', [240, 240, 210], [255, 255, 230]);
     contentBox.addStroke(150, 140, 100);
@@ -5478,20 +5478,20 @@ var QUANTUM = {
     }
 
     // Angle display text
-		var angleText = new QUANTUM.TextBox('proj-helper-angle-text', 10, 215, 16, [140, 130, 90]);
+		var angleText = new PHOTON.TextBox('proj-helper-angle-text', 10, 215, 16, [140, 130, 90]);
     angleText.$.css('width', '100px');
     angleText.hide();
 		contentBox.addChild(angleText);
 
 		// Amplitude display text
-		var ampText = new QUANTUM.TextBox('proj-helper-amp-text', 120, 215, 16, [140, 130, 90]);
+		var ampText = new PHOTON.TextBox('proj-helper-amp-text', 120, 215, 16, [140, 130, 90]);
     ampText.$.css('width', '140px');
     ampText.hide();
 		contentBox.addChild(ampText);
 
     // Bakcground graphics
 
-    var circle = new QUANTUM.RaphaelChild('proj-helper-circle', contentBox, {
+    var circle = new PHOTON.RaphaelChild('proj-helper-circle', contentBox, {
       type: 'ellipse',
       width: '1.5',
       color: 'none',
@@ -5501,7 +5501,7 @@ var QUANTUM = {
     });
 
     // Vertical axis
-    var vAxis = new QUANTUM.RaphaelChild('proj-helper-v-axis', contentBox, {
+    var vAxis = new PHOTON.RaphaelChild('proj-helper-v-axis', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#bba',
@@ -5510,7 +5510,7 @@ var QUANTUM = {
     vAxis.addPoint(120, 210);
 
     // Horizontal axis
-    var hAxis = new QUANTUM.RaphaelChild('proj-helper-h-axis', contentBox, {
+    var hAxis = new PHOTON.RaphaelChild('proj-helper-h-axis', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#bba',
@@ -5519,28 +5519,28 @@ var QUANTUM = {
     hAxis.addPoint(220, 110);
 
     // Diagonal ticks
-    var NWSE = new QUANTUM.RaphaelChild('proj-helper-nwse', contentBox, {
+    var NWSE = new PHOTON.RaphaelChild('proj-helper-nwse', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#bba',
       x0: 45, y0: 35
     });
     NWSE.addPoint(65, 55);
-    var NESW = new QUANTUM.RaphaelChild('proj-helper-nesw', contentBox, {
+    var NESW = new PHOTON.RaphaelChild('proj-helper-nesw', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#bba',
       x0: 195, y0: 35
     });
     NESW.addPoint(175, 55);
-    var SENW = new QUANTUM.RaphaelChild('proj-helper-senw', contentBox, {
+    var SENW = new PHOTON.RaphaelChild('proj-helper-senw', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#bba',
       x0: 195, y0: 185
     });
     SENW.addPoint(175, 165);
-    var SWNE = new QUANTUM.RaphaelChild('proj-helper-senw', contentBox, {
+    var SWNE = new PHOTON.RaphaelChild('proj-helper-senw', contentBox, {
       type: 'path',
       width: 1.5,
       color: '#bba',
@@ -5554,7 +5554,7 @@ var QUANTUM = {
     // paths the photon can take when it exits the beam splitter
 
     // Horizontal bar
-    var hBar = new QUANTUM.RaphaelChild('proj-helper-h-bar', contentBox, {
+    var hBar = new PHOTON.RaphaelChild('proj-helper-h-bar', contentBox, {
       type: 'path',
       width: 8,
       color: '#aa9',
@@ -5564,7 +5564,7 @@ var QUANTUM = {
     hBar.hide();
 
     // Vertical bar
-    var vBar = new QUANTUM.RaphaelChild('proj-helper-v-bar', contentBox, {
+    var vBar = new PHOTON.RaphaelChild('proj-helper-v-bar', contentBox, {
       type: 'path',
       width: 8,
       color: '#aa9',
@@ -5574,7 +5574,7 @@ var QUANTUM = {
     vBar.hide();
 
     // Rotating bar that indicates the photon polarization state
-    var polarBar = new QUANTUM.RaphaelChild('proj-helper-polar-bar', contentBox, {
+    var polarBar = new PHOTON.RaphaelChild('proj-helper-polar-bar', contentBox, {
       type: 'path',
       width: 8,
       color: '#f00',
@@ -5770,7 +5770,7 @@ var QUANTUM = {
       if(direction === 'h') {
         // Top horizontal line
 				if(lines[0]) lines[0].remove();
-				lines[0] = new QUANTUM.RaphaelChild('proj-helper-h-line-1', contentBox, {
+				lines[0] = new PHOTON.RaphaelChild('proj-helper-h-line-1', contentBox, {
           type: 'path',
 					x0: reverse? 120 : start1.x,
 					y0: start1.y,
@@ -5781,7 +5781,7 @@ var QUANTUM = {
 
 				// Bottom horizontal line
 				if(lines[2]) lines[2].remove();
-				lines[2] = new QUANTUM.RaphaelChild('proj-helper-h-line-2', contentBox, {
+				lines[2] = new PHOTON.RaphaelChild('proj-helper-h-line-2', contentBox, {
           type: 'path',
 					x0: reverse? 120 : start2.x,
 					y0: start2.y,
@@ -5793,7 +5793,7 @@ var QUANTUM = {
       else if(direction === 'v') {
         // Right vertical line
 				if(lines[1]) lines[1].remove();
-				lines[1] = new QUANTUM.RaphaelChild('proj-helper-v-line-1', contentBox, {
+				lines[1] = new PHOTON.RaphaelChild('proj-helper-v-line-1', contentBox, {
           type: 'path',
 					x0: start1.x,
 					y0: reverse? 110 : start1.y,
@@ -5804,7 +5804,7 @@ var QUANTUM = {
 
 				// Left vertical line
 				if(lines[3]) lines[3].remove();
-				lines[3] = new QUANTUM.RaphaelChild('proj-helper-v-line-2', contentBox, {
+				lines[3] = new PHOTON.RaphaelChild('proj-helper-v-line-2', contentBox, {
           type: 'path',
 					x0: start2.x,
 					y0: reverse? 110 : start2.y,
@@ -5815,7 +5815,7 @@ var QUANTUM = {
       }
 
       // Call animation
-      QUANTUM.animator.to(this, {line_progress: 1}, 1.5, function() {
+      PHOTON.animator.to(this, {line_progress: 1}, 1.5, function() {
         line_progress = 0;
         if(callback !== undefined) callback();
       })
@@ -5858,10 +5858,10 @@ var QUANTUM = {
   // HelpLayer class constructor
   HelpLayer: function() {
     // Reference to the instance of the application
-    var app = QUANTUM.instance;
+    var app = PHOTON.instance;
 
     // This is an instance of a Child class
-    QUANTUM.Child.call(this, 'help-layer', 0, 0, app.w, app.h);
+    PHOTON.Child.call(this, 'help-layer', 0, 0, app.w, app.h);
     this.div.style.background = 'rgba(0, 0, 0, 0.6)';
     this.div.style.zIndex = 2;
     this.addRaphaelPaper();
@@ -5876,7 +5876,7 @@ var QUANTUM = {
 
     // Render a a clone of the Help button that exits the help layer
     this.renderHelpClone = function(x, y, w, h) {
-      btHelpClone = new QUANTUM.Button('bt-help-clone', x, y, w, h);
+      btHelpClone = new PHOTON.Button('bt-help-clone', x, y, w, h);
       btHelpClone.setColor(100, 220, 255);
       btHelpClone.addTextContent(h-15, '?');
       this.addChild(btHelpClone);
@@ -5890,14 +5890,14 @@ var QUANTUM = {
           // Removing help layer from application
           setTimeout(function() {
             arrows = [];
-            for(i in messages) QUANTUM.removeChild(messages[i]);
+            for(i in messages) PHOTON.removeChild(messages[i]);
             messages = [];
-            QUANTUM.removeChild(btHelpClone);
-            QUANTUM.removeChild(self);
+            PHOTON.removeChild(btHelpClone);
+            PHOTON.removeChild(self);
           }, 600);
 
           // Adding the event listener back onto the original help button
-          QUANTUM.children['bt-help'].onPress(QUANTUM.renderHelpLayer);
+          PHOTON.children['bt-help'].onPress(PHOTON.renderHelpLayer);
         });
       }, 1000);
     }
@@ -5910,7 +5910,7 @@ var QUANTUM = {
       var i = arrows.length;
 
       // Renders an arrow
-      var arrow = new QUANTUM.Arrow('help-arrow-'+i, this, {
+      var arrow = new PHOTON.Arrow('help-arrow-'+i, this, {
         width: 15,
         headWidth: 30,
         length: 80,
@@ -5932,7 +5932,7 @@ var QUANTUM = {
       var i = messages.length;
 
       // Renders the text box
-      var text = new QUANTUM.TextBox('help-msg-'+i, x, y, 18, [255, 255, 255]);
+      var text = new PHOTON.TextBox('help-msg-'+i, x, y, 18, [255, 255, 255]);
       text.addBoxShadow();
       text.center(w);
       text.setContent(content);
@@ -5946,7 +5946,7 @@ var QUANTUM = {
 
     // Calls the setup function defined in each exercise and uses the methods
     // defined above
-    QUANTUM.helpLayerSetup();
+    PHOTON.helpLayerSetup();
   }, // End of HelpLayer class constructor
 
   //== TUTORIAL SETUP ==//
@@ -5972,7 +5972,7 @@ var QUANTUM = {
 
     // Data object sets the message
     functions.push(function() {
-      QUANTUM.children['msg-box'].setMessage(data.hasOwnProperty('msg')? data.msg : '');
+      PHOTON.children['msg-box'].setMessage(data.hasOwnProperty('msg')? data.msg : '');
     });
 
     // Data object tells whether the next button triggers the next part
@@ -5981,13 +5981,13 @@ var QUANTUM = {
       var trigger;
       switch(data.trigger) {
         case 'next':
-          trigger = QUANTUM.children['bt-next'];
+          trigger = PHOTON.children['bt-next'];
           break;
         case 'play':
-          trigger = QUANTUM.children['bt-play'];
+          trigger = PHOTON.children['bt-play'];
           break;
         case 'source':
-          trigger = QUANTUM.photonSources[0];
+          trigger = PHOTON.photonSources[0];
           break;
       }
 
@@ -6002,7 +6002,7 @@ var QUANTUM = {
             if(data.trigger !== 'source') trigger.disable();
 
             // Clearing the message box
-            QUANTUM.children['msg-box'].setMessage('');
+            PHOTON.children['msg-box'].setMessage('');
 
             // Executes the next part in the step
             setTimeout(function() {
@@ -6010,45 +6010,45 @@ var QUANTUM = {
             }, 500);
 
             // Disabling the back button
-            QUANTUM.children['bt-back'].offPress();
-            if(QUANTUM.children['bt-back'].blinkHold)
-              QUANTUM.children['bt-back'].blinkOff();
-            QUANTUM.children['bt-back'].disable();
+            PHOTON.children['bt-back'].offPress();
+            if(PHOTON.children['bt-back'].blinkHold)
+              PHOTON.children['bt-back'].blinkOff();
+            PHOTON.children['bt-back'].disable();
 
             // Ending the the continuous animation (if there is one)
             if(data.hasOwnProperty('endAnimation')) {
-              QUANTUM.animator.killAnimations();
+              PHOTON.animator.killAnimations();
               data.endAnimation();
             }
 
             // Turning off the blink feature of objects except navigation buttons
-            for(key in QUANTUM.children)
+            for(key in PHOTON.children)
               switch(key) {
                 case 'bt-next': break;
                 case 'bt-back': break;
                 case 'bt-play': break;
                 default:
-                  if(QUANTUM.children[key].blinkHold) QUANTUM.children[key].blinkOff();
+                  if(PHOTON.children[key].blinkHold) PHOTON.children[key].blinkOff();
                   break;
               }
 
             // Turning off blik feature of photon sources, detectors, and lightpaths
-            for(i in QUANTUM.photonSources)
-              QUANTUM.photonSources[i].blinkOff();
-            for(i in QUANTUM.photonDetectors)
-              QUANTUM.photonDetectors[i].blinkOff();
-            if(QUANTUM.lightPaths.length && QUANTUM.lightPaths[0].blinkOff !== undefined)
-              for(i in QUANTUM.lightPaths)
-                QUANTUM.lightPaths[i].blinkOff();
+            for(i in PHOTON.photonSources)
+              PHOTON.photonSources[i].blinkOff();
+            for(i in PHOTON.photonDetectors)
+              PHOTON.photonDetectors[i].blinkOff();
+            if(PHOTON.lightPaths.length && PHOTON.lightPaths[0].blinkOff !== undefined)
+              for(i in PHOTON.lightPaths)
+                PHOTON.lightPaths[i].blinkOff();
 
             // Turning off the text blink for the amplitude boxes in 2D experiments
-            for(i in QUANTUM.amplitudeBoxes) {
-              QUANTUM.amplitudeBoxes[i].textBlinkOff();
-              QUANTUM.amplitudeBoxes[i].removeArc();
+            for(i in PHOTON.amplitudeBoxes) {
+              PHOTON.amplitudeBoxes[i].textBlinkOff();
+              PHOTON.amplitudeBoxes[i].removeArc();
             }
             // Removing the addition and multiplication signs
-            if(QUANTUM.children['multiplication-layer'])
-              with(QUANTUM.children['multiplier']) {
+            if(PHOTON.children['multiplication-layer'])
+              with(PHOTON.children['multiplier']) {
                 addition.hide(true);
                 multiplication.hide(true);
                 addEquals.$.fadeOut();
@@ -6066,33 +6066,33 @@ var QUANTUM = {
     if(data.hasOwnProperty('back'))
       functions.push(function() {
         // Adding event listener to the back button
-        with(QUANTUM.children['bt-back']) {
+        with(PHOTON.children['bt-back']) {
           enable();
           blink(true);
           onPress(function() {
-            QUANTUM.children['bt-back'].offPress();
-            QUANTUM.children['bt-back'].blinkOff();
-            QUANTUM.children['bt-back'].disable();
-            QUANTUM.children['bt-next'].offPress();
-            if(QUANTUM.children['bt-next'].blinkHold)
-              QUANTUM.children['bt-next'].blinkOff();
-            QUANTUM.children['bt-next'].disable();
-            if(QUANTUM.children['bt-play']) {
-              QUANTUM.children['bt-play'].offPress();
-              if(QUANTUM.children['bt-play'].blinkHold)
-              QUANTUM.children['bt-play'].blinkOff();
-              QUANTUM.children['bt-play'].disable();
+            PHOTON.children['bt-back'].offPress();
+            PHOTON.children['bt-back'].blinkOff();
+            PHOTON.children['bt-back'].disable();
+            PHOTON.children['bt-next'].offPress();
+            if(PHOTON.children['bt-next'].blinkHold)
+              PHOTON.children['bt-next'].blinkOff();
+            PHOTON.children['bt-next'].disable();
+            if(PHOTON.children['bt-play']) {
+              PHOTON.children['bt-play'].offPress();
+              if(PHOTON.children['bt-play'].blinkHold)
+              PHOTON.children['bt-play'].blinkOff();
+              PHOTON.children['bt-play'].disable();
             }
 
             // Clearing the message box
-            QUANTUM.children['msg-box'].setMessage('');
+            PHOTON.children['msg-box'].setMessage('');
 
             // Undoes the last step (effectively)
             data.back();
             // Executes previous step again
             step.resetStep();
             setTimeout(function() {
-              QUANTUM.tutorial.executePreviousStep();
+              PHOTON.tutorial.executePreviousStep();
             }, 500);
           });
         }
@@ -6128,13 +6128,13 @@ var QUANTUM = {
     // Data object tells the program whether to make the labels small
     if(data.hasOwnProperty('smallLabels'))
       functions.push(function() {
-        QUANTUM._REDUCE_LABEL_SIZE = data.smallLabels;
+        PHOTON._REDUCE_LABEL_SIZE = data.smallLabels;
       });
 
     // The data object tells the program to add/remove a label from objects in
     // the experiment
     if(data.hasOwnProperty('labels')) {
-      QUANTUM._UPDATE_LABELS = true;
+      PHOTON._UPDATE_LABELS = true;
       data.labels.map(function(current) {
         functions.push(function() {
           current.object.addLabel(current.dx, current.dy);
@@ -6143,12 +6143,12 @@ var QUANTUM = {
     }
     if(data.hasOwnProperty('removeLabels'))
       functions.push(function() {
-        QUANTUM._UPDATE_LABELS = false;
-        for(key in QUANTUM.threeChildren) {
-          if(QUANTUM.threeChildren[key].label)
-            QUANTUM.threeChildren[key].label.hide(true);
+        PHOTON._UPDATE_LABELS = false;
+        for(key in PHOTON.threeChildren) {
+          if(PHOTON.threeChildren[key].label)
+            PHOTON.threeChildren[key].label.hide(true);
           setTimeout(function() {
-            QUANTUM.threeChildren[key].removeLabel();
+            PHOTON.threeChildren[key].removeLabel();
           }, 500)
         }
       });
@@ -6183,7 +6183,7 @@ var QUANTUM = {
     ,   currentPart = 0;
 
     // Each Part class in this step is stored
-    for(i in args) parts.push(new QUANTUM.Part(this, args[i]));
+    for(i in args) parts.push(new PHOTON.Part(this, args[i]));
 
     //-- Methods --//
 
@@ -6200,7 +6200,7 @@ var QUANTUM = {
       }
       else {
         this.resetStep();
-        QUANTUM.tutorial.executeNextStep();
+        PHOTON.tutorial.executeNextStep();
       }
     }
 
@@ -6211,7 +6211,7 @@ var QUANTUM = {
 
   // Tutorial class constructor
   Tutorial: function() {
-    QUANTUM.tutorial = this;
+    PHOTON.tutorial = this;
 
     // Steps of the exercise are stored in this vector
     var steps = []
@@ -6220,7 +6220,7 @@ var QUANTUM = {
     // Add a step to the tutorial
     this.addStep = function() {
       arguments = Array.prototype.slice.call(arguments);
-      steps.push(new QUANTUM.Step(arguments));
+      steps.push(new PHOTON.Step(arguments));
     }
 
     // Start tutorial
@@ -6255,7 +6255,7 @@ var QUANTUM = {
     this.w = w; this.h = h;
 
     // Creating a child object which contains the application
-    var app = new QUANTUM.Child('app', 0, 0, w, h);
+    var app = new PHOTON.Child('app', 0, 0, w, h);
     app.fillWithGradient('90deg', [150, 150, 150], [200, 200, 200]);
     document.body.appendChild(app.div);
 
@@ -6283,7 +6283,7 @@ var QUANTUM = {
     ,   s;
     if(ww < w || wh < h) {
       s = Math.min(ww/w, wh/h);
-      QUANTUM._SCALE_FACTOR = s;
+      PHOTON._SCALE_FACTOR = s;
     }
 
     // Detect CSS prefix for the browser
@@ -6293,7 +6293,7 @@ var QUANTUM = {
       dom.style.background = prefixes[i] + 'linear-gradient(#000000, #ffffff)';
       if(dom.style.background) {
         dom = null; delete dom;
-        QUANTUM._BROWSER_PREFIX = prefixes[i];
+        PHOTON._BROWSER_PREFIX = prefixes[i];
         break;
       }
     }
@@ -6301,35 +6301,35 @@ var QUANTUM = {
     // Detect WebGL
     try {
       var canvas = document.createElement('canvas');
-      QUANTUM._WEB_GL_SUPPORT = window.WebGLRenderingContext && (
+      PHOTON._WEB_GL_SUPPORT = window.WebGLRenderingContext && (
         canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
         || canvas.getContext('moz-webgl') || canvas.getContext('webkit-3d')
       );
     }
     catch(err) {
       console.log('Error: Browser or device does not support WebGL')
-      QUANTUM._WEB_GL_SUPPORT = false;
+      PHOTON._WEB_GL_SUPPORT = false;
     }
-    if(QUANTUM._WEB_GL_SUPPORT) console.log('WebGL supported');
+    if(PHOTON._WEB_GL_SUPPORT) console.log('WebGL supported');
 
     // Detect mobile device for textures
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ){
-      QUANTUM._TEXTURE_SUPPORT = false;
+      PHOTON._TEXTURE_SUPPORT = false;
       console.log('mobile device detected, removing texturing')
     }
 
     // Instantiating classes
 
     // Instantiating Application class
-    QUANTUM.instance = new QUANTUM.Application(w, h);
+    PHOTON.instance = new PHOTON.Application(w, h);
 
     // Instantiating Animator class
-    QUANTUM.animator = new QUANTUM.Animator();
+    PHOTON.animator = new PHOTON.Animator();
     // Initializing the render loop
-    QUANTUM.animator.render();
+    PHOTON.animator.render();
 
     // Begin experiment
-    QUANTUM._DEVELOPER_MODE? QUANTUM.experiment() : QUANTUM.renderIntro();
+    PHOTON._DEVELOPER_MODE? PHOTON.experiment() : PHOTON.renderIntro();
   },
 
   // This will be a string that describes the experiment
@@ -6337,22 +6337,22 @@ var QUANTUM = {
   // Render an introductory message for the user and prepare the experiment
   renderIntro: function() {
     // Reference to the instance of the application
-    var app = QUANTUM.instance;
+    var app = PHOTON.instance;
 
     // Black overlay covers the application
-    var overlay = new QUANTUM.Child('intro-overlay', 0, 0, app.w, app.h);
+    var overlay = new PHOTON.Child('intro-overlay', 0, 0, app.w, app.h);
     overlay.fill(100, 100, 100);
     app.add(overlay);
 
     // Intro message is displayed in large white text for users
-    var introMessage = new QUANTUM.TextBox('intro-message', 100, 100, 40, [210, 210, 210]);
+    var introMessage = new PHOTON.TextBox('intro-message', 100, 100, 40, [210, 210, 210]);
     introMessage.center(app.w-200);
-    introMessage.setContent(QUANTUM._INTRO_MESSAGE);
+    introMessage.setContent(PHOTON._INTRO_MESSAGE);
     introMessage.addTextStroke();
     app.add(introMessage);
 
     // BEGIN button starts the experiment
-    var btStart = new QUANTUM.Button('bt-begin', app.w/2-100, 400, 200, 70);
+    var btStart = new PHOTON.Button('bt-begin', app.w/2-100, 400, 200, 70);
     btStart.setColor(100, 220, 180);
     btStart.addTextContent(36, 'START');
     app.add(btStart);
@@ -6368,20 +6368,20 @@ var QUANTUM = {
       overlay.hide(true);
 
       // Render loading screen
-      var loading = new QUANTUM.TextBox('loading', 0, 200, 40, [50, 50, 50]);
+      var loading = new PHOTON.TextBox('loading', 0, 200, 40, [50, 50, 50]);
       loading.center(app.w);
       loading.setContent("Loading...");
       app.add(loading);
 
       // Removing the introductory elements
       setTimeout(function() {
-        QUANTUM.removeChild(overlay);
-        QUANTUM.removeChild(btStart);
-        QUANTUM.removeChild(introMessage);
+        PHOTON.removeChild(overlay);
+        PHOTON.removeChild(btStart);
+        PHOTON.removeChild(introMessage);
       }, 500);
 
       // Beginning the experiment
-      setTimeout(QUANTUM.experiment, 400);
+      setTimeout(PHOTON.experiment, 400);
     });
   }
 }

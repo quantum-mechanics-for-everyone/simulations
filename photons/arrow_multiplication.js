@@ -1,4 +1,4 @@
-// QUANTUM Engine Tutorials
+// PHOTON Engine Tutorials
 // Copyright (C) 2015-2016 Georgetown University
 // Department of Physics - Washington, DC, USA
 // Written by Dylan Cutler (https://github.com/DCtheTall)
@@ -28,7 +28,7 @@ Arrow Multiplication Exercise:
 ---------------------------------
 How to multiply amplitudes
 
-This program uses the QUANTUM engine to
+This program uses the PHOTON engine to
 render an exercise which uses the example
 of partial reflection to teach a geometric
 interpretation of complex multiplication for
@@ -39,11 +39,11 @@ Author: Dylan Cutler
 
 */
 
-// Setting the QUANTUM.experiment property to a function that starts
+// Setting the PHOTON.experiment property to a function that starts
 // the exercise.
-QUANTUM.experiment = function() {
-  // Reference to the instance of the QUANTUM app
-  var app = QUANTUM.instance;
+PHOTON.experiment = function() {
+  // Reference to the instance of the PHOTON app
+  var app = PHOTON.instance;
   // If WebGL is supported, the experiment begins
   beginExperiment();
 }
@@ -55,40 +55,40 @@ function beginExperiment() {
 //== EXPERIMENT SETUP ==//
 
 // Reference to the instance of the application
-var app = QUANTUM.instance;
+var app = PHOTON.instance;
 
 //-- Adding message box and buttons --//
 
 // Refresh button
-var btRefresh = new QUANTUM.ButtonRefresh();
+var btRefresh = new PHOTON.ButtonRefresh();
 app.add(btRefresh, true);
 
 // New window button
-var btWindow = new QUANTUM.ButtonWindow();
+var btWindow = new PHOTON.ButtonWindow();
 app.add(btWindow, true);
 
 // Help button
-var btHelp = new QUANTUM.ButtonHelp(760, 280, 70, 50);
+var btHelp = new PHOTON.ButtonHelp(760, 280, 70, 50);
 app.add(btHelp, true);
 
 // NEXT button
-var btNext = new QUANTUM.ButtonNext(600, 280, 140, 50);
+var btNext = new PHOTON.ButtonNext(600, 280, 140, 50);
 btNext.disable();
 app.add(btNext, true);
 
 // BACK button
-var btBack = new QUANTUM.ButtonBack(440, 280, 140, 50);
+var btBack = new PHOTON.ButtonBack(440, 280, 140, 50);
 btBack.disable();
 app.add(btBack, true);
 
 // Message box
-var msg = new QUANTUM.MessageBox(440, 70, 390, 190);
+var msg = new PHOTON.MessageBox(440, 70, 390, 190);
 app.add(msg, true);
 
 //-- Help Layer setup --//
 
-QUANTUM.helpLayerSetup = function() {
-  var helpLayer = QUANTUM.children['help-layer'];
+PHOTON.helpLayerSetup = function() {
+  var helpLayer = PHOTON.children['help-layer'];
 
   with(helpLayer) {
     // Rendering a clone of the help button
@@ -113,61 +113,61 @@ QUANTUM.helpLayerSetup = function() {
 //-- Elements for the experiment --//
 
 // Experiment window
-var exp = new QUANTUM.ExperimentBox(10, 70, 410, 260);
+var exp = new PHOTON.ExperimentBox(10, 70, 410, 260);
 app.add(exp, true);
 
 // Light paths
 var lightPaths = [
   // Index 0: Path from source to glass
-  new QUANTUM.LightPath(60, 70, 140, 130),
+  new PHOTON.LightPath(60, 70, 140, 130),
   // Index 1: Path from glass interface to detector
-  new QUANTUM.LightPath(140, 130, 340, 70),
+  new PHOTON.LightPath(140, 130, 340, 70),
   // Index 2: From interface to other edge of glass
-  new QUANTUM.LightPath(140, 130, 200, 210, true),
+  new PHOTON.LightPath(140, 130, 200, 210, true),
   // Index 3: From bottom edge of glass to the top edge
-  new QUANTUM.LightPath(200, 210, 260, 130, true),
+  new PHOTON.LightPath(200, 210, 260, 130, true),
   // Index 4: From top edge of glass to detector
-  new QUANTUM.LightPath(260, 130, 340, 70)
+  new PHOTON.LightPath(260, 130, 340, 70)
 ];
 
 // Photon
-var photon = new QUANTUM.Photon(60, 70);
+var photon = new PHOTON.Photon(60, 70);
 photon.setPoyntingFromPath(0);
 
 // Photon source
-var source = new QUANTUM.PhotonSource(60, 70);
+var source = new PHOTON.PhotonSource(60, 70);
 source.rotate(180 * Math.atan(3/4) / Math.PI);
 exp.addLabel('Photon<br>Source', 90, 20);
 
 // Detector
-var detector = new QUANTUM.PhotonDetector(340, 70);
+var detector = new PHOTON.PhotonDetector(340, 70);
 detector.rotate(-30);
 exp.addLabel('Detector', 260, 20);
 
 // Glass
-var glass = new QUANTUM.Glass(30, 130, 340, 80);
+var glass = new PHOTON.Glass(30, 130, 340, 80);
 exp.addLabel('Glass', 40, 135);
 exp.addLabel('Air', 40, 105);
 
 // Probability amplitude displays
 
-var currentAmp = new QUANTUM.AmplitudeBox(60, 360, 'Photon\'s Current Arrow');
+var currentAmp = new PHOTON.AmplitudeBox(60, 360, 'Photon\'s Current Arrow');
 currentAmp.hide();
 app.add(currentAmp);
 
-var eventAmp = new QUANTUM.AmplitudeBox(320, 360);
+var eventAmp = new PHOTON.AmplitudeBox(320, 360);
 eventAmp.setLabel('Reflects off Glass in Air', 16);
 eventAmp.setAmplitude(0.2);
 eventAmp.rotate(180);
 eventAmp.hide();
 app.add(eventAmp);
 
-var compoundAmp = new QUANTUM.AmplitudeBox(580, 360, 'New Photon Arrow');
+var compoundAmp = new PHOTON.AmplitudeBox(580, 360, 'New Photon Arrow');
 compoundAmp.clearAmplitude();
 compoundAmp.hide();
 app.add(compoundAmp);
 
-var multiplier = new QUANTUM.AmplitudeMultiplier();
+var multiplier = new PHOTON.AmplitudeMultiplier();
 multiplier.createMultiplicationLayer(currentAmp, eventAmp, compoundAmp);
 
 //== TEXT FOR EXPERIMENT ==//
@@ -283,7 +283,7 @@ var TEXT = {
     "Press NEXT to continue.",
   'replace-arrow':
     "We replace the photon's current arrow with the new arrow. This arrow is now the "+
-    "quantum arrow for the path the photon is on. Press NEXT to continue.",
+    "PHOTON arrow for the path the photon is on. Press NEXT to continue.",
   'photon-reaches-detector':
     "Finally the photon continues onto the detector."+
     "<br><br>"+
@@ -301,7 +301,7 @@ var TEXT = {
 //== TUTORIAL SETUP ==//
 
 // Instance of the tutorial object
-var tutorial = new QUANTUM.Tutorial();
+var tutorial = new PHOTON.Tutorial();
 
 // Step 0: Introduce setup
 tutorial.addStep(
@@ -814,22 +814,22 @@ tutorial.addStep(
 
 // Starting the experiment
 setTimeout(function(){
-  QUANTUM.children['loading'].$.fadeOut({ duration: 300 });
+  PHOTON.children['loading'].$.fadeOut({ duration: 300 });
   setTimeout(tutorial.start, 500);
 }, 2000);
 
 } // End of the definition of the exercise
 
-function dev(x) { QUANTUM._DEVELOPER_MODE = x }
+function dev(x) { PHOTON._DEVELOPER_MODE = x }
 // dev(true)
 
 // Initializing the application when the HTML document is ready
 $(document).ready(function() {
   // Setting the intro
-  QUANTUM._INTRO_MESSAGE = "Welcome to the exercise on<br>"+
-    "quantum arrow multiplication.<br>"+
+  PHOTON._INTRO_MESSAGE = "Welcome to the exercise on<br>"+
+    "PHOTON arrow multiplication.<br>"+
     "Press START to begin the exercise.";
 
-  // Initializating the QUANTUM object
-  QUANTUM.init(850, 650);
+  // Initializating the PHOTON object
+  PHOTON.init(850, 650);
 });
